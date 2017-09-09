@@ -29,7 +29,13 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         string $type,
         ? EasyDB $db = null
     ) : DaftObjectRepository {
-        if (class_exists($type) === false) {
+        if (
+            is_a(
+                $type,
+                DefinesOwnIdPropertiesInterface::class,
+                true
+            ) === false
+        ) {
             throw new DaftObjectRepositoryTypeException(
                 'Argument 1 passed to ' .
                 static::class .
