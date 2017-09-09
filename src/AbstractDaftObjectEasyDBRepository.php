@@ -45,6 +45,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             throw new RuntimeException('Database connection not specified!');
         }
 
+        /**
+        * @var EasyDB $db
+        */
+        $db = $db;
+
         return new static($type, $db);
     }
 
