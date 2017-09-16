@@ -36,16 +36,12 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 true
             )
         ) {
-            throw new DaftObjectRepositoryTypeException(
-                'Argument 1 passed to ' .
-                static::class .
-                '::' .
-                __FUNCTION__ .
-                '() must be an implementation of ' .
-                DefinesOwnIdPropertiesInterface::class .
-                ', ' .
-                $type .
-                ' given.'
+            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
+                1,
+                static::class,
+                __FUNCTION__,
+                DefinesOwnIdPropertiesInterface::class,
+                $type
             );
         } elseif (false === ($db instanceof EasyDB)) {
             throw new RuntimeException('Database connection not specified!');

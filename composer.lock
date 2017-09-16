@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e60c568523f8129561e7b96b72db2afb",
+    "content-hash": "7dc65b823cd6ee75bc855d0870acb310",
     "packages": [
         {
             "name": "paragonie/easydb",
@@ -62,16 +62,16 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "v0.2.0",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "4b315ba9988fa686b7a8db6bedf87e2112a2b6ca"
+                "reference": "5665d5f5bdd34695788ccddd3acf1ea71592769a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/4b315ba9988fa686b7a8db6bedf87e2112a2b6ca",
-                "reference": "4b315ba9988fa686b7a8db6bedf87e2112a2b6ca",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/5665d5f5bdd34695788ccddd3acf1ea71592769a",
+                "reference": "5665d5f5bdd34695788ccddd3acf1ea71592769a",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +100,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2017-09-03T16:20:32+00:00"
+            "time": "2017-09-16T10:21:17+00:00"
         }
     ],
     "packages-dev": [
