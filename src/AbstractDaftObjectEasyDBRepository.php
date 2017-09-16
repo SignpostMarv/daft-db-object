@@ -242,7 +242,12 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 array_values($idkv)
             );
 
-            return new $type($data[0]);
+            /**
+            * @var DefinesOwnIdPropertiesInterface $out
+            */
+            $out = new $type($data[0]);
+
+            return $out;
         }
 
         return null;
