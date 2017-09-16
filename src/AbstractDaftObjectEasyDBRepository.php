@@ -30,11 +30,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         ? EasyDB $db = null
     ) : DaftObjectRepository {
         if (
-            is_a(
+            false === is_a(
                 $type,
                 DefinesOwnIdPropertiesInterface::class,
                 true
-            ) === false
+            )
         ) {
             throw new DaftObjectRepositoryTypeException(
                 'Argument 1 passed to ' .
@@ -47,7 +47,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 $type .
                 ' given.'
             );
-        } elseif (($db instanceof EasyDB) === false) {
+        } elseif (false === ($db instanceof EasyDB)) {
             throw new RuntimeException('Database connection not specified!');
         }
 
@@ -63,7 +63,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         DefinesOwnIdPropertiesInterface $object,
         ? EasyDB $db = null
     ) : DaftObjectRepository {
-        if (($db instanceof EasyDB) === true) {
+        if (true === ($db instanceof EasyDB)) {
             return static::DaftObjectRepositoryByType(get_class($object), $db);
         }
 
@@ -119,24 +119,24 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $id[$prop] = $object->$prop;
         }
 
-        $autoStartTransaction = ($this->db->inTransaction() === false);
+        $autoStartTransaction = (false === $this->db->inTransaction());
 
-        if ($autoStartTransaction === true) {
+        if (true === $autoStartTransaction) {
             $this->db->beginTransaction();
         }
 
         try {
             $exists = $this->DaftObjectExistsInDatabase($id);
-            if ($exists === false) {
+            if (false === $exists) {
                 $cols = [];
                 $values = [];
 
                 foreach ($object::DaftObjectProperties() as $col) {
                     if (
-                        method_exists(
+                        false === method_exists(
                             $object,
                             'Get' . ucfirst($col)
-                        ) === false
+                        )
                     ) {
                         continue;
                     }
@@ -194,11 +194,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 }
             }
 
-            if ($autoStartTransaction === true) {
+            if (true === $autoStartTransaction) {
                 $this->db->commit();
             }
         } catch (Throwable $e) {
-            if ($autoStartTransaction === true) {
+            if (true === $autoStartTransaction) {
                 $this->db->rollBack();
             }
 
@@ -223,7 +223,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $idkv[$prop] = $id[$i];
         }
 
-        if ($this->DaftObjectExistsInDatabase($idkv) === true) {
+        if (true === $this->DaftObjectExistsInDatabase($idkv)) {
             $where = [];
             foreach (array_keys($idkv) as $col) {
                 $where[] = $this->db->escapeIdentifier($col) . ' = ?';

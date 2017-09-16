@@ -38,7 +38,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
         foreach ($type::DaftObjectProperties() as $i => $prop) {
             $methodName = 'Get' . ucfirst($prop);
-            if ($ref->hasMethod($methodName) === true) {
+            if (true === $ref->hasMethod($methodName)) {
                 $refReturn = $ref->getMethod($methodName)->getReturnType();
 
                 if (
@@ -65,7 +65,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                                 )
                             );
                     }
-                    if (in_array($prop, $nullables, true) === false) {
+                    if (false === in_array($prop, $nullables, true)) {
                         $queryPart .= ' NOT NULL';
                     }
 
