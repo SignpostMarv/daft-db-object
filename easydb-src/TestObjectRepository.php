@@ -13,12 +13,19 @@ use ReflectionClass;
 use ReflectionType;
 use RuntimeException;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
+use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 
 class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 {
     protected function __construct(string $type, EasyDB $db)
     {
         parent::__construct($type, $db);
+
+        /**
+        * @var DefinesOwnIdPropertiesInterface $type
+        */
+        $type = $type;
+
         $query =
             'CREATE TABLE ' .
             $db->escapeIdentifier($this->DaftObjectDatabaseTable()) .

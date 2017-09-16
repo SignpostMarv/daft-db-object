@@ -76,6 +76,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     public function RemoveDaftObjectById($id) : void
     {
         $id = array_values(is_array($id) ? $id : [$id]);
+
+        /**
+        * @var DefinesOwnIdPropertiesInterface $type
+        */
         $type = $this->type;
         $idkv = [];
 
@@ -207,6 +211,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     protected function RecallDaftObjectFromData($id) : ? DaftObject
     {
+        /**
+        * @var DefinesOwnIdPropertiesInterface $type
+        */
         $type = $this->type;
         $idkv = [];
 
