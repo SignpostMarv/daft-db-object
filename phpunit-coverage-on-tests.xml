@@ -1,5 +1,8 @@
 <phpunit bootstrap="phpunit-bootstrap.php">
   <testsuites>
+    <testsuite name="DaftObject">
+      <directory>./vendor/signpostmarv/daft-object/tests/</directory>
+    </testsuite>
     <testsuite name="DaftObjectEasyDBRepository">
       <directory>./easydb-tests/</directory>
     </testsuite>
@@ -20,6 +23,9 @@
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">./src/</directory>
+      <directory suffix=".php">./easydb-src/</directory>
+      <directory suffix=".php">./easydb-tests/</directory>
+      <directory suffix=".php">./vendor/signpostmarv/daft-object/src/</directory>
     </whitelist>
   </filter>
 </phpunit>

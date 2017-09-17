@@ -32,6 +32,20 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         if (
             false === is_a(
                 $type,
+                DaftObjectCreatedByArray::class,
+                true
+            )
+        ) {
+            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
+                1,
+                static::class,
+                __FUNCTION__,
+                DaftObjectCreatedByArray::class,
+                $type
+            );
+        } elseif (
+            false === is_a(
+                $type,
                 DefinesOwnIdPropertiesInterface::class,
                 true
             )

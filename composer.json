@@ -33,12 +33,16 @@
             "php ./vendor/phpstan/phpstan/bin/phpstan analyse -l5 .php_cs.dist src easydb-src easydb-tests",
             "php ./vendor/vimeo/psalm/bin/psalm",
             "php ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
+        ],
+        "check-coverage-on-tests": [
+            "composer install",
+            "php ./vendor/phpunit/phpunit/phpunit -c ./phpunit-coverage-on-tests.xml"
         ]
     },
     "require": {
         "php": "^7.1",
         "paragonie/easydb": "^2.3",
-        "signpostmarv/daft-object": "^0.3.0"
+        "signpostmarv/daft-object": "^0.4.0"
     },
     "require-dev": {
         "phpstan/phpstan": "dev-master",
