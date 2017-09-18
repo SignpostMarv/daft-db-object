@@ -253,6 +253,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             );
 
             /**
+            * @var \SignpostMarv\DaftObject\DaftObjectCreatedByArray $type
+            */
+            $type = $type;
+
+            /**
             * @var DefinesOwnIdPropertiesInterface $out
             */
             $out = new $type($data[0]);
