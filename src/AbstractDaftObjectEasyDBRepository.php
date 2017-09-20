@@ -134,7 +134,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         try {
             $exists = $this->DaftObjectExistsInDatabase($id);
             if (false === $exists) {
-                $cols = [];
                 $values = [];
 
                 foreach ($object::DaftObjectProperties() as $col) {
@@ -146,57 +145,27 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                     ) {
                         continue;
                     }
-                    $cols[] = $this->db->escapeIdentifier($col);
-                    $values[] = $object->$col;
+                    $values[$col] = $object->$col;
                 }
 
-                $this->db->safeQuery(
-                    (
-                        'INSERT INTO ' .
-                        $this->db->escapeIdentifier(
-                            $this->DaftObjectDatabaseTable()
-                        ) .
-                        ' (' .
-                        implode(', ', $cols) .
-                        ') VALUES (' .
-                        implode(', ', array_fill(0, count($cols), '?')) .
-                        ')'
-                    ),
+                $this->db->insert(
+                    $this->DaftObjectDatabaseTable(),
                     $values
                 );
             } else {
                 $changed = $object->ChangedProperties();
                 if (count($changed) > 0) {
-                    $cols = [];
                     $values = [];
 
                     foreach ($changed as $col) {
-                        $values[] = $object->$col;
-                        $cols[] =
-                            $this->db->escapeIdentifier($col) .
-                            ' = ?';
+                        $values[$col] = $object->$col;
                     }
 
-                    $query =
-                        'UPDATE ' .
-                        $this->db->escapeIdentifier(
-                            $this->DaftObjectDatabaseTable()
-                        ) .
-                        ' SET ' .
-                        implode(', ', $cols);
-
-                    $cols = [];
-
-                    foreach ($id as $col => $value) {
-                        $values[] = $value;
-                        $cols[] =
-                            $this->db->escapeIdentifier($col) .
-                            ' = ?';
-                    }
-
-                    $query .= ' WHERE ' . implode(' AND ', $cols);
-
-                    $this->db->safeQuery($query, $values);
+                    $this->db->update(
+                        $this->DaftObjectDatabaseTable(),
+                        $values,
+                        $id
+                    );
                 }
             }
 
