@@ -73,11 +73,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         DefinesOwnIdPropertiesInterface $object,
         ? EasyDB $db = null
     ) : DaftObjectRepository {
-        if (true === ($db instanceof EasyDB)) {
             return static::DaftObjectRepositoryByType(get_class($object), $db);
-        }
-
-        throw new RuntimeException('Database connection not specified!');
     }
 
     /**
