@@ -58,7 +58,13 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 $type
             );
         } elseif (false === ($db instanceof EasyDB)) {
-            throw new RuntimeException('Database connection not specified!');
+            throw new DatabaseConnectionNotSpecifiedException(
+                2,
+                static::class,
+                __FUNCTION__,
+                EasyDB::class,
+                'null'
+            );
         }
 
         /**
@@ -133,34 +139,29 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
         try {
             $exists = $this->DaftObjectExistsInDatabase($id);
-            if (false === $exists) {
-                $values = [];
-
-                foreach ($object::DaftObjectProperties() as $col) {
-                    if (
-                        false === method_exists(
-                            $object,
-                            'Get' . ucfirst($col)
-                        )
-                    ) {
-                        continue;
-                    }
-                    $values[$col] = $object->$col;
-                }
-
-                $this->db->insert(
-                    $this->DaftObjectDatabaseTable(),
-                    $values
-                );
-            } else {
+            $cols = $object::DaftObjectExportableProperties();
+            if ($exists) {
                 $changed = $object->ChangedProperties();
-                if (count($changed) > 0) {
+                $cols = array_filter(
+                    $cols,
+                    function (string $prop) use ($changed) : bool {
+                        return in_array($prop, $changed, true);
+                    }
+                );
+            }
+            if (count($cols) > 0) {
                     $values = [];
 
-                    foreach ($changed as $col) {
+                foreach ($cols as $col) {
                         $values[$col] = $object->$col;
                     }
 
+                if (false === $exists) {
+                    $this->db->insert(
+                        $this->DaftObjectDatabaseTable(),
+                        $values
+                    );
+                } else {
                     $this->db->update(
                         $this->DaftObjectDatabaseTable(),
                         $values,

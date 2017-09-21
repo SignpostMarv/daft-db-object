@@ -8,10 +8,14 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\EasyDB\Tests;
 
+use ParagonIE\EasyDB\EasyDB;
+use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
+use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
 use SignpostMarv\DaftObject\DaftObjectCreatedByArray;
 use SignpostMarv\DaftObject\DaftObjectNullStub;
 use SignpostMarv\DaftObject\DaftObjectNullStubCreatedByArray;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\ReadWrite;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryByTypeTest as Base;
 
@@ -36,5 +40,47 @@ class DaftObjectRepositoryByTypeTest extends Base
                 DaftObjectCreatedByArray::class,
             ],
         ];
+    }
+
+    public function dataProviderDatabaseConnectionNotSpecifiedException(
+    ) : array {
+        return [
+            [
+                TestObjectRepository::class,
+                EasyDB::class,
+                ReadWrite::class,
+            ]
+        ];
+    }
+
+    /**
+    * @dataProvider dataProviderDatabaseConnectionNotSpecifiedException
+    *
+    * @param AbstractDaftObjectEasyDBRepository $implementation
+    */
+    public function testDatabaseConnectionNotSpecifiedException(
+        string $implementation,
+        string $dbImplementation,
+        string $objectImplementation
+    ) : void {
+        /**
+        * @var AbstractDaftObjectEasyDBRepository $implementation
+        */
+        $implementation = $implementation;
+
+        $this->expectException(DatabaseConnectionNotSpecifiedException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Argument 2 passed to %s::%s() must be an implementation of %s, %s given.',
+                $implementation,
+                'DaftObjectRepositoryByType',
+                $dbImplementation,
+                'null'
+            )
+        );
+
+        $repo = $implementation::DaftObjectRepositoryByType(
+            $objectImplementation
+        );
     }
 }
