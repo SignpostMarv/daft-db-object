@@ -79,7 +79,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         DefinesOwnIdPropertiesInterface $object,
         ? EasyDB $db = null
     ) : DaftObjectRepository {
-            return static::DaftObjectRepositoryByType(get_class($object), $db);
+        return static::DaftObjectRepositoryByType(get_class($object), $db);
     }
 
     /**
@@ -150,11 +150,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 );
             }
             if (count($cols) > 0) {
-                    $values = [];
+                $values = [];
 
                 foreach ($cols as $col) {
-                        $values[$col] = $object->$col;
-                    }
+                    $values[$col] = $object->$col;
+                }
 
                 if (false === $exists) {
                     $this->db->insert(
