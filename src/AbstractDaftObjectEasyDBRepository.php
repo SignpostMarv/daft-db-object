@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject;
 
 use ParagonIE\EasyDB\EasyDB;
-use RuntimeException;
 use Throwable;
 
 abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryRepository

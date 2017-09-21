@@ -10,13 +10,13 @@ namespace SignpostMarv\DaftObject\EasyDB\Tests;
 
 use ParagonIE\EasyDB\EasyDB;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
-use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
 use SignpostMarv\DaftObject\DaftObjectCreatedByArray;
 use SignpostMarv\DaftObject\DaftObjectNullStub;
 use SignpostMarv\DaftObject\DaftObjectNullStubCreatedByArray;
+use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
-use SignpostMarv\DaftObject\ReadWrite;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
+use SignpostMarv\DaftObject\ReadWrite;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryByTypeTest as Base;
 
 class DaftObjectRepositoryByTypeTest extends Base
@@ -49,7 +49,7 @@ class DaftObjectRepositoryByTypeTest extends Base
                 TestObjectRepository::class,
                 EasyDB::class,
                 ReadWrite::class,
-            ]
+            ],
         ];
     }
 
