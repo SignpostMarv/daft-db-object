@@ -40,38 +40,16 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
             $methodName = 'Get' . ucfirst($prop);
             if (true === $ref->hasMethod($methodName)) {
                 $refReturn = $ref->getMethod($methodName)->getReturnType();
-
                 if (
                     ($refReturn instanceof ReflectionType) &&
-                    $refReturn->isBuiltin()
+                    true
                 ) {
-                    $queryPart = $db->escapeIdentifier($prop);
-                    switch ($refReturn->__toString()) {
-                        case 'string':
-                            $queryPart .= ' VARCHAR(255)';
-                        break;
-                        case 'float':
-                            $queryPart .= ' REAL';
-                        break;
-                        case 'int':
-                        case 'bool':
-                            $queryPart .= ' INTEGER';
-                        break;
-                        default:
-                            throw new RuntimeException(
-                                sprintf(
-                                    'Unsupported data type! (%s)',
-                                    $refReturn->__toString()
-                                )
-                            );
-                    }
-                    if (false === in_array($prop, $nullables, true)) {
-                        $queryPart .= ' NOT NULL';
-                    }
-
-                    $queryParts[] = $queryPart;
-                } else {
-                    throw new RuntimeException('Only supports builtins');
+                    $queryParts[] = static::QueryPartFromRefReturn(
+                        $db,
+                        $refReturn,
+                        $prop,
+                        $nullables
+                    );
                 }
             }
         }
@@ -98,5 +76,44 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
     protected function DaftObjectDatabaseTable() : string
     {
         return preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
+    }
+
+    protected static function QueryPartFromRefReturn(
+        EasyDB $db,
+        ReflectionType $refReturn,
+        string $prop,
+        array $nullables
+    ) : string {
+        if (
+                    $refReturn->isBuiltin()
+                ) {
+                    $queryPart = $db->escapeIdentifier($prop);
+                    switch ($refReturn->__toString()) {
+                        case 'string':
+                            $queryPart .= ' VARCHAR(255)';
+                        break;
+                        case 'float':
+                            $queryPart .= ' REAL';
+                        break;
+                        case 'int':
+                        case 'bool':
+                            $queryPart .= ' INTEGER';
+                        break;
+                        default:
+                            throw new RuntimeException(
+                                sprintf(
+                                    'Unsupported data type! (%s)',
+                                    $refReturn->__toString()
+                                )
+                            );
+                    }
+                    if (false === in_array($prop, $nullables, true)) {
+                        $queryPart .= ' NOT NULL';
+                    }
+
+            return $queryPart;
+                } else {
+                    throw new RuntimeException('Only supports builtins');
+                }
     }
 }
