@@ -121,6 +121,27 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     abstract protected function DaftObjectDatabaseTable() : string;
 
+    /**
+    * @return string[]
+    */
+    protected function RememberDaftObjectDataCols(
+        DaftObject $object,
+        bool $exists
+    ) : array {
+            $cols = $object::DaftObjectExportableProperties();
+            if ($exists) {
+                $changed = $object->ChangedProperties();
+                $cols = array_filter(
+                    $cols,
+                    function (string $prop) use ($changed) : bool {
+                        return in_array($prop, $changed, true);
+                    }
+                );
+            }
+
+        return $cols;
+    }
+
     protected function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object
     ) : void {
@@ -138,16 +159,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
         try {
             $exists = $this->DaftObjectExistsInDatabase($id);
-            $cols = $object::DaftObjectExportableProperties();
-            if ($exists) {
-                $changed = $object->ChangedProperties();
-                $cols = array_filter(
-                    $cols,
-                    function (string $prop) use ($changed) : bool {
-                        return in_array($prop, $changed, true);
-                    }
-                );
-            }
+            $cols = $this->RememberDaftObjectDataCols($object, $exists);
             if (count($cols) > 0) {
                 $values = [];
 
