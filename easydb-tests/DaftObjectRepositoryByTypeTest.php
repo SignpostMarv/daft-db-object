@@ -61,10 +61,6 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $dbImplementation,
         string $objectImplementation
     ) : void {
-        /**
-        * @var AbstractDaftObjectEasyDBRepository $implementation
-        */
-        $implementation = $implementation;
         if (
             false === is_a(
                 $implementation,
@@ -88,7 +84,7 @@ class DaftObjectRepositoryByTypeTest extends Base
         $this->expectExceptionMessage(
             sprintf(
                 'Argument 2 passed to %s::%s() must be an implementation of %s, %s given.',
-                (string) $implementation,
+                $implementation,
                 'DaftObjectRepositoryByType',
                 $dbImplementation,
                 'null'
