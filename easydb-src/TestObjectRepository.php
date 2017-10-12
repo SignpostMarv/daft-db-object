@@ -39,16 +39,16 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         foreach ($type::DaftObjectProperties() as $i => $prop) {
             $methodName = 'Get' . ucfirst($prop);
             if (true === $ref->hasMethod($methodName)) {
-                    $queryPart = static::QueryPartFromRefReturn(
-                        $db,
-                        $ref->getMethod($methodName)->getReturnType(),
-                        $prop
-                    );
-                    if (false === in_array($prop, $nullables, true)) {
-                        $queryPart .= ' NOT NULL';
-                    }
+                $queryPart = static::QueryPartFromRefReturn(
+                    $db,
+                    $ref->getMethod($methodName)->getReturnType(),
+                    $prop
+                );
+                if (false === in_array($prop, $nullables, true)) {
+                    $queryPart .= ' NOT NULL';
+                }
 
-                    $queryParts[] = $queryPart;
+                $queryParts[] = $queryPart;
             }
         }
 
