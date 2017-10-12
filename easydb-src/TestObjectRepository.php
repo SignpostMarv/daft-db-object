@@ -39,10 +39,10 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         foreach ($type::DaftObjectProperties() as $i => $prop) {
             $methodName = 'Get' . ucfirst($prop);
             if (true === $ref->hasMethod($methodName)) {
-                $queryPart = static::QueryPartFromRefReturn(
-                    $db,
-                    $ref->getMethod($methodName)->getReturnType(),
-                    $prop
+                $queryPart =
+                    $db->escapeIdentifier($prop) .
+                    static::QueryPartTypeFromRefReturn(
+                    $ref->getMethod($methodName)->getReturnType()
                 );
                 if (false === in_array($prop, $nullables, true)) {
                     $queryPart .= ' NOT NULL';
@@ -76,26 +76,23 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         return preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
     }
 
-    protected static function QueryPartFromRefReturn(
-        EasyDB $db,
-        ? ReflectionType $refReturn,
-        string $prop
+    protected static function QueryPartTypeFromRefReturn(
+        ? ReflectionType $refReturn
     ) : string {
         if (
             ! is_null($refReturn) &&
             $refReturn->isBuiltin()
         ) {
-            $queryPart = $db->escapeIdentifier($prop);
             switch ($refReturn->__toString()) {
                 case 'string':
-                    $queryPart .= ' VARCHAR(255)';
+                    return ' VARCHAR(255)';
                 break;
                 case 'float':
-                    $queryPart .= ' REAL';
+                    return ' REAL';
                 break;
                 case 'int':
                 case 'bool':
-                    $queryPart .= ' INTEGER';
+                    return ' INTEGER';
                 break;
                 default:
                     throw new RuntimeException(
@@ -105,8 +102,6 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                         )
                     );
             }
-
-            return $queryPart;
         }
 
         throw new RuntimeException('Only supports builtins');
