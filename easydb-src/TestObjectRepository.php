@@ -39,14 +39,9 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         foreach ($type::DaftObjectProperties() as $i => $prop) {
             $methodName = 'Get' . ucfirst($prop);
             if (true === $ref->hasMethod($methodName)) {
-                $refReturn = $ref->getMethod($methodName)->getReturnType();
-                if (
-                    ($refReturn instanceof ReflectionType) &&
-                    true
-                ) {
                     $queryPart = static::QueryPartFromRefReturn(
                         $db,
-                        $refReturn,
+                        $ref->getMethod($methodName)->getReturnType(),
                         $prop
                     );
                     if (false === in_array($prop, $nullables, true)) {
@@ -54,7 +49,6 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                     }
 
                     $queryParts[] = $queryPart;
-                }
             }
         }
 
@@ -84,10 +78,11 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
     protected static function QueryPartFromRefReturn(
         EasyDB $db,
-        ReflectionType $refReturn,
+        ? ReflectionType $refReturn,
         string $prop
     ) : string {
         if (
+            !is_null($refReturn) &&
             $refReturn->isBuiltin()
         ) {
             $queryPart = $db->escapeIdentifier($prop);
