@@ -128,16 +128,16 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         DaftObject $object,
         bool $exists
     ) : array {
-            $cols = $object::DaftObjectExportableProperties();
-            if ($exists) {
-                $changed = $object->ChangedProperties();
-                $cols = array_filter(
-                    $cols,
-                    function (string $prop) use ($changed) : bool {
-                        return in_array($prop, $changed, true);
-                    }
-                );
-            }
+        $cols = $object::DaftObjectExportableProperties();
+        if ($exists) {
+            $changed = $object->ChangedProperties();
+            $cols = array_filter(
+                $cols,
+                function (string $prop) use ($changed) : bool {
+                    return in_array($prop, $changed, true);
+                }
+            );
+        }
 
         return $cols;
     }
