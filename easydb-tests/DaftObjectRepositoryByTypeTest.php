@@ -62,21 +62,12 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $objectImplementation
     ) : void {
         if (
-            false === is_a(
+            $this->MaybeSkipTestIfNotImplementation(
                 $implementation,
-                AbstractDaftObjectEasyDBRepository::class,
-                true
+                1,
+                __METHOD__
             )
         ) {
-            $this->markTestSkipped(
-                'Argument 1 passed to ' .
-                static::class .
-                '::' .
-                __FUNCTION__ .
-                ' must be an implementation of ' .
-                AbstractDaftObjectEasyDBRepository::class
-            );
-
             return;
         }
 
@@ -94,5 +85,32 @@ class DaftObjectRepositoryByTypeTest extends Base
         $implementation::DaftObjectRepositoryByType(
             $objectImplementation
         );
+    }
+
+    protected function MaybeSkipTestIfNotImplementation(
+        string $implementation,
+        int $argument,
+        string $method
+    ) : bool {
+        if (
+            false === is_a(
+                $implementation,
+                AbstractDaftObjectEasyDBRepository::class,
+                true
+            )
+        ) {
+            $this->markTestSkipped(
+                'Argument ' .
+                (string) $argument .
+                ' passed to ' .
+                $method .
+                ' must be an implementation of ' .
+                AbstractDaftObjectEasyDBRepository::class
+            );
+
+            return true;
+        }
+
+        return false;
     }
 }
