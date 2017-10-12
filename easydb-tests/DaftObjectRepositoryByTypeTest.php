@@ -67,6 +67,24 @@ class DaftObjectRepositoryByTypeTest extends Base
         * @var AbstractDaftObjectEasyDBRepository $implementation
         */
         $implementation = $implementation;
+        if (
+            false === is_a(
+                $implementation,
+                AbstractDaftObjectEasyDBRepository::class,
+                true
+            )
+        ) {
+            $this->markTestSkipped(
+                'Argument 1 passed to ' .
+                static::class .
+                '::' .
+                __FUNCTION__ .
+                ' must be an implementation of ' .
+                AbstractDaftObjectEasyDBRepository::class
+            );
+
+            return;
+        }
 
         $this->expectException(DatabaseConnectionNotSpecifiedException::class);
         $this->expectExceptionMessage(
