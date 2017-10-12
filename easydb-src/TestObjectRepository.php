@@ -47,7 +47,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                     $db->escapeIdentifier($prop) .
                     static::QueryPartTypeFromRefReturn(
                         $refReturn
-                );
+                    );
                 if (false === in_array($prop, $nullables, true)) {
                     $queryPart .= ' NOT NULL';
                 }
