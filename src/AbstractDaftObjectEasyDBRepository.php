@@ -158,6 +158,27 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $values;
     }
 
+    protected function RememberDaftObjectDataUpdate(
+        bool $exists,
+        array $id,
+        array $values
+    ) : void {
+        if (count($values) > 0) {
+            if (false === $exists) {
+                $this->db->insert(
+                    $this->DaftObjectDatabaseTable(),
+                    $values
+                );
+            } else {
+                $this->db->update(
+                    $this->DaftObjectDatabaseTable(),
+                    $values,
+                    $id
+                );
+            }
+        }
+    }
+
     protected function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object
     ) : void {
@@ -176,20 +197,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         try {
             $exists = $this->DaftObjectExistsInDatabase($id);
             $values = $this->RememberDaftObjectDataValues($object, $exists);
-            if (count($values) > 0) {
-                if (false === $exists) {
-                    $this->db->insert(
-                        $this->DaftObjectDatabaseTable(),
-                        $values
-                    );
-                } else {
-                    $this->db->update(
-                        $this->DaftObjectDatabaseTable(),
-                        $values,
-                        $id
-                    );
-                }
-            }
+            $this->RememberDaftObjectDataUpdate($exists, $id, $values);
 
             if (true === $autoStartTransaction) {
                 $this->db->commit();
