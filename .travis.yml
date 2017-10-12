@@ -10,4 +10,5 @@ allow_failures:
     - php: nightly
 
 script:
+    - composer install
     - composer run tests
