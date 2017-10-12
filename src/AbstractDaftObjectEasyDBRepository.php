@@ -142,6 +142,22 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $cols;
     }
 
+    /**
+    * @return mixed[]
+    */
+    protected function RememberDaftObjectDataValues(
+        DaftObject $object,
+        bool $exists
+    ) : array {
+        $values = [];
+        $cols = $this->RememberDaftObjectDataCols($object, $exists);
+        foreach ($cols as $col) {
+            $values[$col] = $object->$col;
+        }
+
+        return $values;
+    }
+
     protected function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object
     ) : void {
@@ -159,14 +175,8 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
         try {
             $exists = $this->DaftObjectExistsInDatabase($id);
-            $cols = $this->RememberDaftObjectDataCols($object, $exists);
-            if (count($cols) > 0) {
-                $values = [];
-
-                foreach ($cols as $col) {
-                    $values[$col] = $object->$col;
-                }
-
+            $values = $this->RememberDaftObjectDataValues($object, $exists);
+            if (count($values) > 0) {
                 if (false === $exists) {
                     $this->db->insert(
                         $this->DaftObjectDatabaseTable(),
