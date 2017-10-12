@@ -55,8 +55,6 @@ class DaftObjectRepositoryByTypeTest extends Base
 
     /**
     * @dataProvider dataProviderDatabaseConnectionNotSpecifiedException
-    *
-    * @param AbstractDaftObjectEasyDBRepository $implementation
     */
     public function testDatabaseConnectionNotSpecifiedException(
         string $implementation,
