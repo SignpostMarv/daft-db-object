@@ -97,7 +97,7 @@ class DaftObjectRepositoryByTypeTest extends Base
             )
         );
 
-        $repo = $implementation::DaftObjectRepositoryByType(
+        $implementation::DaftObjectRepositoryByType(
             $objectImplementation
         );
     }
