@@ -86,14 +86,11 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
             switch ($refReturn->__toString()) {
                 case 'string':
                     return ' VARCHAR(255)';
-                break;
                 case 'float':
                     return ' REAL';
-                break;
                 case 'int':
                 case 'bool':
                     return ' INTEGER';
-                break;
                 default:
                     throw new RuntimeException(
                         sprintf(
