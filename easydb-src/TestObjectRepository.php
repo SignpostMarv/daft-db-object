@@ -82,7 +82,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         string $prop
     ) : string {
         if (
-            !is_null($refReturn) &&
+            ! is_null($refReturn) &&
             $refReturn->isBuiltin()
         ) {
             $queryPart = $db->escapeIdentifier($prop);
