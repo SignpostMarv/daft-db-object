@@ -85,35 +85,35 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         array $nullables
     ) : string {
         if (
-                    $refReturn->isBuiltin()
-                ) {
-                    $queryPart = $db->escapeIdentifier($prop);
-                    switch ($refReturn->__toString()) {
-                        case 'string':
-                            $queryPart .= ' VARCHAR(255)';
-                        break;
-                        case 'float':
-                            $queryPart .= ' REAL';
-                        break;
-                        case 'int':
-                        case 'bool':
-                            $queryPart .= ' INTEGER';
-                        break;
-                        default:
-                            throw new RuntimeException(
-                                sprintf(
-                                    'Unsupported data type! (%s)',
-                                    $refReturn->__toString()
-                                )
-                            );
-                    }
-                    if (false === in_array($prop, $nullables, true)) {
-                        $queryPart .= ' NOT NULL';
-                    }
+            $refReturn->isBuiltin()
+        ) {
+            $queryPart = $db->escapeIdentifier($prop);
+            switch ($refReturn->__toString()) {
+                case 'string':
+                    $queryPart .= ' VARCHAR(255)';
+                break;
+                case 'float':
+                    $queryPart .= ' REAL';
+                break;
+                case 'int':
+                case 'bool':
+                    $queryPart .= ' INTEGER';
+                break;
+                default:
+                    throw new RuntimeException(
+                        sprintf(
+                            'Unsupported data type! (%s)',
+                            $refReturn->__toString()
+                        )
+                    );
+            }
+            if (false === in_array($prop, $nullables, true)) {
+                $queryPart .= ' NOT NULL';
+            }
 
             return $queryPart;
-                } else {
-                    throw new RuntimeException('Only supports builtins');
-                }
+        }
+
+        throw new RuntimeException('Only supports builtins');
     }
 }
