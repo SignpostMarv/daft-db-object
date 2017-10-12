@@ -44,12 +44,16 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                     ($refReturn instanceof ReflectionType) &&
                     true
                 ) {
-                    $queryParts[] = static::QueryPartFromRefReturn(
+                    $queryPart = static::QueryPartFromRefReturn(
                         $db,
                         $refReturn,
-                        $prop,
-                        $nullables
+                        $prop
                     );
+                    if (false === in_array($prop, $nullables, true)) {
+                        $queryPart .= ' NOT NULL';
+                    }
+
+                    $queryParts[] = $queryPart;
                 }
             }
         }
@@ -81,8 +85,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
     protected static function QueryPartFromRefReturn(
         EasyDB $db,
         ReflectionType $refReturn,
-        string $prop,
-        array $nullables
+        string $prop
     ) : string {
         if (
             $refReturn->isBuiltin()
@@ -106,9 +109,6 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                             $refReturn->__toString()
                         )
                     );
-            }
-            if (false === in_array($prop, $nullables, true)) {
-                $queryPart .= ' NOT NULL';
             }
 
             return $queryPart;
