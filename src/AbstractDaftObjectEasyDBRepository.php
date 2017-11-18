@@ -99,21 +99,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $idkv[$prop] = $id[$i];
         }
 
-        $where = [];
-        foreach (array_keys($idkv) as $col) {
-            $where[] = $this->db->escapeIdentifier($col) . ' = ?';
-        }
-
-        $query = (
-            'DELETE FROM ' .
-            $this->db->escapeIdentifier(
-                $this->DaftObjectDatabaseTable()
-            ) .
-            ' WHERE ' .
-            implode(' AND ', $where)
+        $this->db->delete(
+            $this->DaftObjectDatabaseTable(),
+            $idkv
         );
-
-        $this->db->safeQuery($query, array_values($idkv));
 
         $this->ForgetDaftObjectById($id);
     }
