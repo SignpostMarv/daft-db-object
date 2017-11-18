@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject;
 
 use ParagonIE\EasyDB\EasyDB;
-use Throwable;
 
 abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryRepository
 {
@@ -188,27 +187,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $id[$prop] = $object->$prop;
         }
 
-        $autoStartTransaction = (false === $this->db->inTransaction());
-
-        if (true === $autoStartTransaction) {
-            $this->db->beginTransaction();
-        }
-
-        try {
+        $this->db->tryFlatTransaction(function () use ($id, $object) : void {
             $exists = $this->DaftObjectExistsInDatabase($id);
             $values = $this->RememberDaftObjectDataValues($object, $exists);
             $this->RememberDaftObjectDataUpdate($exists, $id, $values);
-
-            if (true === $autoStartTransaction) {
-                $this->db->commit();
-            }
-        } catch (Throwable $e) {
-            if (true === $autoStartTransaction) {
-                $this->db->rollBack();
-            }
-
-            throw $e;
-        }
+        });
     }
 
     /**
