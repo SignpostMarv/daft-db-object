@@ -28,20 +28,13 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         ? EasyDB $db = null
     ) : DaftObjectRepository {
         if (
-            false === is_a(
+            false === (
+                $a = is_a(
                 $type,
                 DaftObjectCreatedByArray::class,
                 true
-            )
-        ) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                1,
-                static::class,
-                __FUNCTION__,
-                DaftObjectCreatedByArray::class,
-                $type
-            );
-        } elseif (
+                )
+            ) ||
             false === is_a(
                 $type,
                 DefinesOwnIdPropertiesInterface::class,
@@ -52,7 +45,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 1,
                 static::class,
                 __FUNCTION__,
-                DefinesOwnIdPropertiesInterface::class,
+                (
+                    $a
+                        ? DefinesOwnIdPropertiesInterface::class
+                        : DaftObjectCreatedByArray::class
+                ),
                 $type
             );
         } elseif (false === ($db instanceof EasyDB)) {
