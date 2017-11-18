@@ -40,7 +40,7 @@
     },
     "require": {
         "php": "^7.1",
-        "paragonie/easydb": "^2.3",
+        "paragonie/easydb": "^2.4",
         "signpostmarv/daft-object": "^0.7.0"
     },
     "require-dev": {
