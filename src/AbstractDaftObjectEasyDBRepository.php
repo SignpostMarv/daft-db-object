@@ -191,7 +191,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $type = $this->type;
         $idkv = [];
 
-        if (is_scalar($id) && count($type::DaftObjectIdProperties()) === 1) {
+        if (is_scalar($id) && 1 === count($type::DaftObjectIdProperties())) {
             $id = [
                 $id,
             ];
