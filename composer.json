@@ -41,7 +41,7 @@
     "require": {
         "php": "^7.1",
         "paragonie/easydb": "^2.4",
-        "signpostmarv/daft-object": "^0.7.0"
+        "signpostmarv/daft-object": "^0.8.0"
     },
     "require-dev": {
         "phpstan/phpstan": "dev-master",
