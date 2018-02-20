@@ -28,10 +28,10 @@
     },
     "scripts": {
         "tests": [
-            "php ./vendor/phpunit/phpunit/phpunit -v",
-            "php ./vendor/phpstan/phpstan/bin/phpstan analyse -c ./phpstan.neon .php_cs.dist src easydb-src easydb-tests",
-            "php ./vendor/vimeo/psalm/bin/psalm",
-            "php ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
+            "phpunit -v",
+            "phpstan analyse -c ./phpstan.neon .php_cs.dist src easydb-src easydb-tests",
+            "psalm",
+            "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ],
         "check-coverage-on-tests": [
             "composer install",
@@ -44,9 +44,9 @@
         "signpostmarv/daft-object": "^0.8.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "dev-master",
-        "phpunit/phpunit": "^5.7",
-        "signpostmarv/php-cs-fixer-config": "^0.3.0",
-        "vimeo/psalm": "dev-master"
+        "phpstan/phpstan": "^0.9.2",
+        "phpunit/phpunit": "^7.0",
+        "signpostmarv/php-cs-fixer-config": "^0.4.0",
+        "vimeo/psalm": "^0.3.93"
     }
 }
