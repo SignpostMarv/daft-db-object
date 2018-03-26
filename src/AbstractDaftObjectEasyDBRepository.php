@@ -30,9 +30,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         if (
             false === (
                 $a = is_a(
-                $type,
-                DaftObjectCreatedByArray::class,
-                true
+                    $type,
+                    DaftObjectCreatedByArray::class,
+                    true
                 )
             ) ||
             false === is_a(
