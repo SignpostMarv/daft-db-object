@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "paragonie/easydb",
-            "version": "v2.4.0",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/easydb.git",
-                "reference": "8610c9b2e87fa82ae739c3da74ccbf3f38b51821"
+                "reference": "f35bd24abb31fa5a42a18b82fc26122d7c2fe931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/easydb/zipball/8610c9b2e87fa82ae739c3da74ccbf3f38b51821",
-                "reference": "8610c9b2e87fa82ae739c3da74ccbf3f38b51821",
+                "url": "https://api.github.com/repos/paragonie/easydb/zipball/f35bd24abb31fa5a42a18b82fc26122d7c2fe931",
+                "reference": "f35bd24abb31fa5a42a18b82fc26122d7c2fe931",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
                 "security",
                 "sql"
             ],
-            "time": "2017-11-17T22:36:19+00:00"
+            "time": "2018-03-10T19:23:49+00:00"
         },
         {
             "name": "signpostmarv/daft-object",
