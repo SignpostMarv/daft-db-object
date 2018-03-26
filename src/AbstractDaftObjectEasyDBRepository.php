@@ -185,9 +185,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     protected function RecallDaftObjectFromData($id) : ? DaftObject
     {
-        /**
-        * @var DefinesOwnIdPropertiesInterface $type
-        */
         $type = $this->type;
         $idkv = [];
 
@@ -221,11 +218,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 ),
                 array_values($idkv)
             );
-
-            /**
-            * @var \SignpostMarv\DaftObject\DaftObjectCreatedByArray $type
-            */
-            $type = $type;
 
             /**
             * @var DefinesOwnIdPropertiesInterface $out
