@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8905f938cbd833f6fdeeb57216047d03",
+    "content-hash": "2b5a5d86ce2c1e35686339a1cd056e53",
     "packages": [
         {
             "name": "paragonie/easydb",
@@ -3454,16 +3454,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "1.0.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "1395299e281fd462d5afd3e4b07b9ddd6f7b04e3"
+                "reference": "60c6bb40218c9e26aec15347c4403c6f58f84328"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/1395299e281fd462d5afd3e4b07b9ddd6f7b04e3",
-                "reference": "1395299e281fd462d5afd3e4b07b9ddd6f7b04e3",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/60c6bb40218c9e26aec15347c4403c6f58f84328",
+                "reference": "60c6bb40218c9e26aec15347c4403c6f58f84328",
                 "shasum": ""
             },
             "require": {
@@ -3508,7 +3508,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2018-04-03T02:40:29+00:00"
+            "time": "2018-04-06T22:28:22+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3563,7 +3563,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "vimeo/psalm": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
