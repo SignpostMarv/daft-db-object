@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a0ae5e892395c41e5bea3e388ed0808",
+    "content-hash": "8905f938cbd833f6fdeeb57216047d03",
     "packages": [
         {
             "name": "paragonie/easydb",
@@ -2818,16 +2818,16 @@
         },
         {
             "name": "signpostmarv/php-cs-fixer-config",
-            "version": "v0.4.0",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/PHP-CS-Fixer-Config.git",
-                "reference": "cd83d408ac2b74a6065c632febde828830576be1"
+                "reference": "6476c49f43b5c4801f81afee363eb0f49a47adb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/PHP-CS-Fixer-Config/zipball/cd83d408ac2b74a6065c632febde828830576be1",
-                "reference": "cd83d408ac2b74a6065c632febde828830576be1",
+                "url": "https://api.github.com/repos/SignpostMarv/PHP-CS-Fixer-Config/zipball/6476c49f43b5c4801f81afee363eb0f49a47adb4",
+                "reference": "6476c49f43b5c4801f81afee363eb0f49a47adb4",
                 "shasum": ""
             },
             "require": {
@@ -2835,9 +2835,9 @@
                 "php": "^7.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^0.9.1",
+                "phpstan/phpstan": "^0.9.2",
                 "phpstan/phpstan-strict-rules": "^0.9.0",
-                "vimeo/psalm": "dev-master"
+                "vimeo/psalm": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -2856,7 +2856,7 @@
                 }
             ],
             "description": "PHP-CS-Fixer Config",
-            "time": "2017-12-18T22:07:39+00:00"
+            "time": "2018-04-01T10:29:40+00:00"
         },
         {
             "name": "symfony/console",
