@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b5a5d86ce2c1e35686339a1cd056e53",
+    "content-hash": "c2298c41971543cce52daa2eb434626c",
     "packages": [
         {
             "name": "paragonie/easydb",
@@ -3569,7 +3569,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "ext-mbstring": "*"
     },
     "platform-dev": []
 }
