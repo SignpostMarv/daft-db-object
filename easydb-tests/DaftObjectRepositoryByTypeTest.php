@@ -82,9 +82,7 @@ class DaftObjectRepositoryByTypeTest extends Base
             )
         );
 
-        $implementation::DaftObjectRepositoryByType(
-            $objectImplementation
-        );
+        $implementation::DaftObjectRepositoryByType($objectImplementation);
     }
 
     protected function MaybeSkipTestIfNotImplementation(
@@ -92,13 +90,7 @@ class DaftObjectRepositoryByTypeTest extends Base
         int $argument,
         string $method
     ) : bool {
-        if (
-            false === is_a(
-                $implementation,
-                AbstractDaftObjectEasyDBRepository::class,
-                true
-            )
-        ) {
+        if (false === is_a($implementation, AbstractDaftObjectEasyDBRepository::class, true)) {
             $this->markTestSkipped(
                 'Argument ' .
                 (string) $argument .

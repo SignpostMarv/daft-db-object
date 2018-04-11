@@ -27,29 +27,16 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         string $type,
         ? EasyDB $db = null
     ) : DaftObjectRepository {
+        $a = is_a($type, DaftObjectCreatedByArray::class, true);
         if (
-            false === (
-                $a = is_a(
-                    $type,
-                    DaftObjectCreatedByArray::class,
-                    true
-                )
-            ) ||
-            false === is_a(
-                $type,
-                DefinesOwnIdPropertiesInterface::class,
-                true
-            )
+            false === $a ||
+            false === is_a($type, DefinesOwnIdPropertiesInterface::class, true)
         ) {
             throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
                 1,
                 static::class,
                 __FUNCTION__,
-                (
-                    $a
-                        ? DefinesOwnIdPropertiesInterface::class
-                        : DaftObjectCreatedByArray::class
-                ),
+                ($a ? DefinesOwnIdPropertiesInterface::class : DaftObjectCreatedByArray::class),
                 $type
             );
         } elseif (false === ($db instanceof EasyDB)) {
@@ -61,11 +48,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 'null'
             );
         }
-
-        /**
-        * @var EasyDB $db
-        */
-        $db = $db;
 
         return new static($type, $db);
     }
@@ -90,16 +72,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $type = $this->type;
         $idkv = [];
 
-        foreach (
-            array_values($type::DaftObjectIdProperties()) as $i => $prop
-        ) {
+        foreach (array_values($type::DaftObjectIdProperties()) as $i => $prop) {
             $idkv[$prop] = $id[$i];
         }
 
-        $this->db->delete(
-            $this->DaftObjectDatabaseTable(),
-            $idkv
-        );
+        $this->db->delete($this->DaftObjectDatabaseTable(), $idkv);
 
         $this->ForgetDaftObjectById($id);
     }
@@ -109,10 +86,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * @return string[]
     */
-    protected function RememberDaftObjectDataCols(
-        DaftObject $object,
-        bool $exists
-    ) : array {
+    protected function RememberDaftObjectDataCols(DaftObject $object, bool $exists) : array {
         $cols = $object::DaftObjectExportableProperties();
         if ($exists) {
             $changed = $object->ChangedProperties();
@@ -128,12 +102,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     }
 
     /**
-    * @return mixed[]
+    * @return array<string, mixed>
     */
-    protected function RememberDaftObjectDataValues(
-        DaftObject $object,
-        bool $exists
-    ) : array {
+    protected function RememberDaftObjectDataValues(DaftObject $object, bool $exists) : array
+    {
         $values = [];
         $cols = $this->RememberDaftObjectDataCols($object, $exists);
         foreach ($cols as $col) {
@@ -143,30 +115,19 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $values;
     }
 
-    protected function RememberDaftObjectDataUpdate(
-        bool $exists,
-        array $id,
-        array $values
-    ) : void {
+    protected function RememberDaftObjectDataUpdate(bool $exists, array $id, array $values) : void
+    {
         if (count($values) > 0) {
             if (false === $exists) {
-                $this->db->insert(
-                    $this->DaftObjectDatabaseTable(),
-                    $values
-                );
+                $this->db->insert($this->DaftObjectDatabaseTable(), $values);
             } else {
-                $this->db->update(
-                    $this->DaftObjectDatabaseTable(),
-                    $values,
-                    $id
-                );
+                $this->db->update($this->DaftObjectDatabaseTable(), $values, $id);
             }
         }
     }
 
-    protected function RememberDaftObjectData(
-        DefinesOwnIdPropertiesInterface $object
-    ) : void {
+    protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
+    {
         $id = [];
 
         foreach ($object::DaftObjectIdProperties() as $prop) {
@@ -189,14 +150,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $idkv = [];
 
         if (is_scalar($id) && 1 === count($type::DaftObjectIdProperties())) {
-            $id = [
-                $id,
-            ];
+            $id = [$id];
         }
 
-        foreach (
-            array_values($type::DaftObjectIdProperties()) as $i => $prop
-        ) {
+        foreach (array_values($type::DaftObjectIdProperties()) as $i => $prop) {
             $idkv[$prop] = $id[$i];
         }
 
@@ -209,9 +166,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $data = $this->db->safeQuery(
                 (
                     'SELECT * FROM ' .
-                    $this->db->escapeIdentifier(
-                        $this->DaftObjectDatabaseTable()
-                    ) .
+                    $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
                     ' WHERE ' .
                     implode(' AND ', $where) .
                     ' LIMIT 1'
@@ -241,9 +196,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             (int) $this->db->single(
                 (
                     'SELECT COUNT(*) FROM ' .
-                    $this->db->escapeIdentifier(
-                        $this->DaftObjectDatabaseTable()
-                    ) .
+                    $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
                     ' WHERE ' .
                     implode(' AND ', $where)
                 ),

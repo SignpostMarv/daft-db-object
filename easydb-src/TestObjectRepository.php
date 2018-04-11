@@ -45,9 +45,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                 $refReturn = $ref->getMethod($methodName)->getReturnType();
                 $queryPart =
                     $db->escapeIdentifier($prop) .
-                    static::QueryPartTypeFromRefReturn(
-                        $refReturn
-                    );
+                    static::QueryPartTypeFromRefReturn($refReturn);
                 if (false === in_array($prop, $nullables, true)) {
                     $queryPart .= ' NOT NULL';
                 }
@@ -80,12 +78,9 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         return preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
     }
 
-    protected static function QueryPartTypeFromRefReturn(
-        ReflectionType $refReturn
-    ) : string {
-        if (
-            $refReturn->isBuiltin()
-        ) {
+    protected static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string
+    {
+        if ($refReturn->isBuiltin()) {
             switch ($refReturn->__toString()) {
                 case 'string':
                     return ' VARCHAR(255)';
