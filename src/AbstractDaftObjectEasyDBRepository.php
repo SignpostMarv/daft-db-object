@@ -89,7 +89,8 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * @return string[]
     */
-    protected function RememberDaftObjectDataCols(DaftObject $object, bool $exists) : array {
+    protected function RememberDaftObjectDataCols(DaftObject $object, bool $exists) : array
+    {
         $cols = $object::DaftObjectExportableProperties();
         if ($exists) {
             $changed = $object->ChangedProperties();
