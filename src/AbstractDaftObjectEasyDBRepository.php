@@ -74,6 +74,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
         foreach (array_values($type::DaftObjectIdProperties()) as $i => $prop) {
             $idkv[$prop] = $id[$i];
+            if (is_bool($idkv[$prop])) {
+                $idkv[$prop] = $idkv[$prop] ? 1 : 0;
+            }
         }
 
         $this->db->delete($this->DaftObjectDatabaseTable(), $idkv);
@@ -110,6 +113,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $cols = $this->RememberDaftObjectDataCols($object, $exists);
         foreach ($cols as $col) {
             $values[$col] = $object->$col;
+            if (is_bool($values[$col])) {
+                $values[$col] = $values[$col] ? 1 : 0;
+            }
         }
 
         return $values;
