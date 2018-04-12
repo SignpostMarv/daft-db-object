@@ -61,13 +61,7 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $dbImplementation,
         string $objectImplementation
     ) : void {
-        if (
-            $this->MaybeSkipTestIfNotImplementation(
-                $implementation,
-                1,
-                __METHOD__
-            )
-        ) {
+        if ($this->MaybeSkipTestIfNotImplementation($implementation, 1, __METHOD__)) {
             return;
         }
 
