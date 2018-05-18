@@ -75,7 +75,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
     protected function DaftObjectDatabaseTable() : string
     {
-        return preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
+        return preg_replace('/[^a-z]+/', '_', (string) mb_strtolower($this->type));
     }
 
     protected static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string

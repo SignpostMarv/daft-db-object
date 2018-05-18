@@ -64,12 +64,19 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     public function RemoveDaftObjectById($id) : void
     {
+        /**
+        * @var array<int, scalar|bool> $id
+        */
         $id = array_values(is_array($id) ? $id : [$id]);
 
         /**
         * @var DefinesOwnIdPropertiesInterface $type
         */
         $type = $this->type;
+
+        /**
+        * @var array<string, scalar|bool> $idkv
+        */
         $idkv = [];
 
         foreach (array_values($type::DaftObjectIdProperties()) as $i => $prop) {
@@ -110,8 +117,14 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     protected function RememberDaftObjectDataValues(DaftObject $object, bool $exists) : array
     {
+        /**
+        * @var array<string, mixed>
+        */
         $values = [];
         $cols = $this->RememberDaftObjectDataCols($object, $exists);
+        /**
+        * @var string $col
+        */
         foreach ($cols as $col) {
             $values[$col] = $object->$col;
             if (is_bool($values[$col])) {
@@ -135,8 +148,14 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
     {
+        /**
+        * @var array<string, mixed> $id
+        */
         $id = [];
 
+        /**
+        * @var string $prop
+        */
         foreach ($object::DaftObjectIdProperties() as $prop) {
             $id[$prop] = $object->$prop;
         }
@@ -148,19 +167,34 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         });
     }
 
-    /**
-    * @param mixed $id
-    */
     protected function RecallDaftObjectFromData($id) : ? DaftObject
     {
         $type = $this->type;
+
+        /**
+        * @var array<string, mixed> $idkv
+        */
         $idkv = [];
 
-        if (is_scalar($id) && 1 === count($type::DaftObjectIdProperties())) {
+        /**
+        * @var array<int, string> $idProps
+        */
+        $idProps = $type::DaftObjectIdProperties();
+
+        if (is_scalar($id) && 1 === count($idProps)) {
             $id = [$id];
         }
 
-        foreach (array_values($type::DaftObjectIdProperties()) as $i => $prop) {
+        /**
+        * @var array<int, scalar> $id
+        */
+        $id = $id;
+
+        /**
+        * @var int $i
+        * @var string $prop
+        */
+        foreach (array_values($idProps) as $i => $prop) {
             $idkv[$prop] = $id[$i];
         }
 
@@ -195,6 +229,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     private function DaftObjectExistsInDatabase(array $id) : bool
     {
         $where = [];
+        /**
+        * @var string $col
+        */
         foreach (array_keys($id) as $col) {
             $where[] = $this->db->escapeIdentifier($col) . ' = ?';
         }
