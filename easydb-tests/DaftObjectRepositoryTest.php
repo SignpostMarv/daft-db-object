@@ -9,8 +9,10 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\EasyDB\Tests;
 
 use ParagonIE\EasyDB\Factory;
+use ReflectionObject;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\IntegerIdBasedDaftObject;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as Base;
 
@@ -32,5 +34,23 @@ class DaftObjectRepositoryTest extends Base
             $object,
             Factory::create('sqlite::memory:')
         );
+    }
+
+    public function testScalarRecall() : void
+    {
+        $instance = new IntegerIdBasedDaftObject([
+            'Foo' => 1,
+        ]);
+
+        $repo = static::DaftObjectRepositoryByDaftObject($instance);
+
+        $repo->RememberDaftObject($instance);
+
+        $this->assertSame($instance, $repo->RecallDaftObject(1));
+
+        $ref = (new ReflectionObject($repo))->getMethod('RecallDaftObjectFromData');
+        $ref->setAccessible(true);
+
+        $this->assertSame($instance->GetFoo(), $ref->invoke($repo, 1)->GetId());
     }
 }
