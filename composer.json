@@ -2,7 +2,7 @@
     "name": "signpostmarv/daft-db-object",
     "description": "Daft Object with database repositories",
     "type": "library",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "SignpostMarv",
