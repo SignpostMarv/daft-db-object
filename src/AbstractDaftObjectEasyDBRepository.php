@@ -191,6 +191,23 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
 
         if (true === $this->DaftObjectExistsInDatabase($idkv)) {
+
+            /**
+            * @var DefinesOwnIdPropertiesInterface $out
+            */
+            $out = new $type($this->RecallDaftObjectFromDataQuery($idkv));
+
+            return $out;
+        }
+
+        return null;
+    }
+
+    protected function RecallDaftObjectFromDataQuery(array $idkv) : array
+    {
+        /**
+        * @var array[] $data
+        */
             $data = $this->db->safeQuery(
                 (
                     'SELECT * FROM ' .
@@ -207,15 +224,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 array_values($idkv)
             );
 
-            /**
-            * @var DefinesOwnIdPropertiesInterface $out
-            */
-            $out = new $type($data[0]);
-
-            return $out;
-        }
-
-        return null;
+        return $data[0];
     }
 
     private function DaftObjectExistsInDatabase(array $id) : bool
