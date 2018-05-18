@@ -12,8 +12,8 @@ use ParagonIE\EasyDB\Factory;
 use ReflectionObject;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
-use SignpostMarv\DaftObject\IntegerIdBasedDaftObject;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
+use SignpostMarv\DaftObject\IntegerIdBasedDaftObject;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as Base;
 
 class DaftObjectRepositoryTest extends Base
