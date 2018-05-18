@@ -191,17 +191,17 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
 
         if (true === $this->DaftObjectExistsInDatabase($idkv)) {
-            $where = [];
-            foreach (array_keys($idkv) as $col) {
-                $where[] = $this->db->escapeIdentifier($col) . ' = ?';
-            }
-
             $data = $this->db->safeQuery(
                 (
                     'SELECT * FROM ' .
                     $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
                     ' WHERE ' .
-                    implode(' AND ', $where) .
+                    implode(' AND ', array_map(
+                        function (string $col) : string {
+                            return $this->db->escapeIdentifier($col) . ' = ?';
+                        },
+                        array_keys($idkv)
+                    )) .
                     ' LIMIT 1'
                 ),
                 array_values($idkv)
