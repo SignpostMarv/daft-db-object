@@ -14,12 +14,17 @@ build:
   tests:
     override:
       -
-        command: 'vendor/bin/phpunit --coverage-clover=some-file'
+        command: 'composer run tests'
         coverage:
-          file: 'some-file'
+          file: 'phpunit.clover'
           format: 'clover'
 
 checks:
   php:
     code_rating: true
     duplication: true
+
+filter:
+  excluded_paths:
+    - './easydb-tests/'
+    - './easydb-src/'

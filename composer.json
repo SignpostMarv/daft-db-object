@@ -29,7 +29,7 @@
     },
     "scripts": {
         "tests": [
-            "phpunit -vvvv",
+            "phpunit -vvvv --coverage-clover=phpunit.clover",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src easydb-src easydb-tests",
             "psalm",
             "phpcpd ./src/ ./easydb-tests/ ./easydb-src/",
