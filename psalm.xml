@@ -3,7 +3,7 @@
     name="Example Psalm config with recommended defaults"
     stopOnFirstError="false"
     useDocblockTypes="true"
-    totallyTyped="true"
+    totallyTyped="false"
 >
     <projectFiles>
         <file name=".php_cs.dist" />
