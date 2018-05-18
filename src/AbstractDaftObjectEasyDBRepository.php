@@ -64,9 +64,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     public function RemoveDaftObjectById($id) : void
     {
-        /**
-        * @var array<int, scalar|bool> $id
-        */
         $id = array_values(is_array($id) ? $id : [$id]);
 
         /**
@@ -184,11 +181,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         if (is_scalar($id) && 1 === count($idProps)) {
             $id = [$id];
         }
-
-        /**
-        * @var array<int, scalar> $id
-        */
-        $id = $id;
 
         /**
         * @var int $i
