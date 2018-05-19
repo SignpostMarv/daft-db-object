@@ -46,24 +46,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return new static($type, $db);
     }
 
-    protected static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
-        ? EasyDB $db,
-        int $arg,
-        string $function
-    ) : EasyDB {
-        if (false === ($db instanceof EasyDB)) {
-            throw new DatabaseConnectionNotSpecifiedException(
-                $arg,
-                static::class,
-                $function,
-                EasyDB::class,
-                'null'
-            );
-        }
-
-        return $db;
-    }
-
     public static function DaftObjectRepositoryByDaftObject(
         DefinesOwnIdPropertiesInterface $object,
         ? EasyDB $db = null
@@ -97,6 +79,24 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $this->db->delete($this->DaftObjectDatabaseTable(), $this->ModifyTypesForDatabase($idkv));
 
         $this->ForgetDaftObjectById($id);
+    }
+
+    protected static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
+        ? EasyDB $db,
+        int $arg,
+        string $function
+    ) : EasyDB {
+        if (false === ($db instanceof EasyDB)) {
+            throw new DatabaseConnectionNotSpecifiedException(
+                $arg,
+                static::class,
+                $function,
+                EasyDB::class,
+                'null'
+            );
+        }
+
+        return $db;
     }
 
     /**
