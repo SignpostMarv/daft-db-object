@@ -62,23 +62,39 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     {
         $id = array_values(is_array($id) ? $id : [$id]);
 
-        /**
-        * @var DefinesOwnIdPropertiesInterface $type
-        */
-        $type = $this->type;
-
-        /**
-        * @var array<string, scalar|bool> $idkv
-        */
-        $idkv = [];
-
-        foreach (array_values($type::DaftObjectIdProperties()) as $i => $prop) {
-            $idkv[$prop] = $id[$i];
-        }
+        $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
 
         $this->db->delete($this->DaftObjectDatabaseTable(), $this->ModifyTypesForDatabase($idkv));
 
         $this->ForgetDaftObjectById($id);
+    }
+
+    /**
+    * @param mixed $id
+    *
+    * @return array<string, mixed>
+    */
+    protected static function DaftObjectIdPropertiesFromType(string $type, $id) : array
+    {
+        /**
+        * @var array<int, string> $idProps
+        */
+        $idProps = array_values($type::DaftObjectIdProperties());
+
+        if (is_scalar($id) && 1 === count($idProps)) {
+            $id = [$id];
+        }
+
+        /**
+        * @var array<string, mixed> $idkv
+        */
+        $idkv = [];
+
+        foreach ($idProps as $i => $prop) {
+            $idkv[$prop] = $id[$i];
+        }
+
+        return $idkv;
     }
 
     protected static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
@@ -197,29 +213,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     protected function RecallDaftObjectFromData($id) : ? DaftObject
     {
-        $type = $this->type;
-
-        /**
-        * @var array<string, mixed> $idkv
-        */
-        $idkv = [];
-
-        /**
-        * @var array<int, string> $idProps
-        */
-        $idProps = $type::DaftObjectIdProperties();
-
-        if (is_scalar($id) && 1 === count($idProps)) {
-            $id = [$id];
-        }
-
-        /**
-        * @var int $i
-        * @var string $prop
-        */
-        foreach (array_values($idProps) as $i => $prop) {
-            $idkv[$prop] = $id[$i];
-        }
+        $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
 
         return $this->RecallDaftObjectFromQuery($idkv);
     }
