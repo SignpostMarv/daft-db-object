@@ -8,5 +8,5 @@ Copyright 2018 SignpostMarv
 I needed an excuse to tinker with the repository pattern.
 
 ## packages
-* [signpostmarv/daft-object](https://github.com/SignpostMarv/daft-db-object)
+* [signpostmarv/daft-object](https://github.com/SignpostMarv/daft-object)
 * [paragonie/easydb](https://github.com/paragonie/easydb)
