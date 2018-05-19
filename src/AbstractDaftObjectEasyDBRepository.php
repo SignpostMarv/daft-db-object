@@ -39,23 +39,37 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 ($a ? DefinesOwnIdPropertiesInterface::class : DaftObjectCreatedByArray::class),
                 $type
             );
-        } elseif (false === ($db instanceof EasyDB)) {
+        }
+
+        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired($db, 2, __FUNCTION__);
+
+        return new static($type, $db);
+    }
+
+    protected static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
+        ? EasyDB $db,
+        int $arg,
+        string $function
+    ) : EasyDB {
+        if (false === ($db instanceof EasyDB)) {
             throw new DatabaseConnectionNotSpecifiedException(
-                2,
+                $arg,
                 static::class,
-                __FUNCTION__,
+                $function,
                 EasyDB::class,
                 'null'
             );
         }
 
-        return new static($type, $db);
+        return $db;
     }
 
     public static function DaftObjectRepositoryByDaftObject(
         DefinesOwnIdPropertiesInterface $object,
         ? EasyDB $db = null
     ) : DaftObjectRepository {
+        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired($db, 2, __FUNCTION__);
+
         return static::DaftObjectRepositoryByType(get_class($object), $db);
     }
 
