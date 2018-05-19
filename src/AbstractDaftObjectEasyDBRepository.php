@@ -78,14 +78,34 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
         foreach (array_values($type::DaftObjectIdProperties()) as $i => $prop) {
             $idkv[$prop] = $id[$i];
-            if (is_bool($idkv[$prop])) {
-                $idkv[$prop] = $idkv[$prop] ? 1 : 0;
-            }
         }
 
-        $this->db->delete($this->DaftObjectDatabaseTable(), $idkv);
+        $this->db->delete($this->DaftObjectDatabaseTable(), $this->ModifyTypesForDatabase($idkv));
 
         $this->ForgetDaftObjectById($id);
+    }
+
+    /**
+    * @return array<string, mixed>
+    */
+    protected function ModifyTypesForDatabase(array $values) : array
+    {
+        /**
+        * @var array<string, mixed> $out
+        */
+        $out = array_map(
+            /**
+            * @param mixed $val
+            *
+            * @return mixed
+            */
+            function ($val) {
+                return is_bool($val) ? (int) $val : $val;
+            },
+            $values
+        );
+
+        return $out;
     }
 
     abstract protected function DaftObjectDatabaseTable() : string;
@@ -124,12 +144,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         */
         foreach ($cols as $col) {
             $values[$col] = $object->$col;
-            if (is_bool($values[$col])) {
-                $values[$col] = $values[$col] ? 1 : 0;
-            }
         }
 
-        return $values;
+        return $this->ModifyTypesForDatabase($values);
     }
 
     protected function RememberDaftObjectDataUpdate(bool $exists, array $id, array $values) : void
