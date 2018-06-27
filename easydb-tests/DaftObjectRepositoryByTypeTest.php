@@ -61,12 +61,12 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $dbImplementation,
         string $objectImplementation
     ) : void {
-        if ($this->MaybeSkipTestIfNotImplementation($implementation, 1, __METHOD__)) {
+        if (static::MaybeSkipTestIfNotImplementation($implementation, 1, __METHOD__)) {
             return;
         }
 
-        $this->expectException(DatabaseConnectionNotSpecifiedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(DatabaseConnectionNotSpecifiedException::class);
+        static::expectExceptionMessage(
             sprintf(
                 'Argument 2 passed to %s::%s() must be an implementation of %s, %s given.',
                 $implementation,
@@ -85,7 +85,7 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $method
     ) : bool {
         if (false === is_a($implementation, AbstractDaftObjectEasyDBRepository::class, true)) {
-            $this->markTestSkipped(
+            static::markTestSkipped(
                 'Argument ' .
                 (string) $argument .
                 ' passed to ' .

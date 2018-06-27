@@ -46,11 +46,11 @@ class DaftObjectRepositoryTest extends Base
 
         $repo->RememberDaftObject($instance);
 
-        $this->assertSame($instance, $repo->RecallDaftObject(1));
+        static::assertSame($instance, $repo->RecallDaftObject(1));
 
         $ref = (new ReflectionObject($repo))->getMethod('RecallDaftObjectFromData');
         $ref->setAccessible(true);
 
-        $this->assertSame($instance->GetFoo(), $ref->invoke($repo, 1)->GetId());
+        static::assertSame($instance->GetFoo(), $ref->invoke($repo, 1)->GetId());
     }
 }

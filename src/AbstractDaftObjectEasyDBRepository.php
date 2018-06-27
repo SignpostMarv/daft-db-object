@@ -211,6 +211,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         });
     }
 
+    /**
+    * @param mixed $id
+    */
     protected function RecallDaftObjectFromData($id) : ? DaftObject
     {
         $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
