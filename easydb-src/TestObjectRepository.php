@@ -26,10 +26,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         */
         $type = $type;
 
-        $query =
-            'CREATE TABLE ' .
-            $db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
-            ' (';
+        $query = 'CREATE TABLE ' . $db->escapeIdentifier($this->DaftObjectDatabaseTable()) . ' (';
 
         $queryParts = [];
 
@@ -60,15 +57,10 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         }
 
         if (count($primaryKeyCols) > 0) {
-            $queryParts[] =
-                'PRIMARY KEY (' .
-                implode(',', $primaryKeyCols) .
-                ')';
+            $queryParts[] = 'PRIMARY KEY (' . implode(',', $primaryKeyCols) . ')';
         }
 
-        $query .=
-            implode(',', $queryParts) .
-            ');';
+        $query .= implode(',', $queryParts) . ');';
 
         $db->safeQuery($query);
     }
@@ -90,12 +82,10 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                 case 'bool':
                     return ' INTEGER';
                 default:
-                    throw new RuntimeException(
-                        sprintf(
-                            'Unsupported data type! (%s)',
-                            $refReturn->__toString()
-                        )
-                    );
+                    throw new RuntimeException(sprintf(
+                        'Unsupported data type! (%s)',
+                        $refReturn->__toString()
+                    ));
             }
         }
 

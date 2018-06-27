@@ -42,8 +42,8 @@ class DaftObjectRepositoryByTypeTest extends Base
         ];
     }
 
-    public function dataProviderDatabaseConnectionNotSpecifiedException(
-    ) : array {
+    public function dataProviderDatabaseConnectionNotSpecifiedException() : array
+    {
         return [
             [
                 TestObjectRepository::class,

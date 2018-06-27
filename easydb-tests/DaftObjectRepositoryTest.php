@@ -18,9 +18,8 @@ use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as Base;
 
 class DaftObjectRepositoryTest extends Base
 {
-    public static function DaftObjectRepositoryByType(
-        string $type
-    ) : DaftObjectRepository {
+    public static function DaftObjectRepositoryByType(string $type) : DaftObjectRepository
+    {
         return TestObjectRepository::DaftObjectRepositoryByType(
             $type,
             Factory::create('sqlite::memory:')
@@ -38,9 +37,7 @@ class DaftObjectRepositoryTest extends Base
 
     public function testScalarRecall() : void
     {
-        $instance = new IntegerIdBasedDaftObject([
-            'Foo' => 1,
-        ]);
+        $instance = new IntegerIdBasedDaftObject(['Foo' => 1]);
 
         $repo = static::DaftObjectRepositoryByDaftObject($instance);
 
