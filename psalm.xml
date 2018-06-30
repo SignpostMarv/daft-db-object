@@ -2,7 +2,7 @@
 <psalm
     name="Example Psalm config with recommended defaults"
     useDocblockTypes="true"
-    totallyTyped="false"
+    totallyTyped="true"
 >
     <projectFiles>
         <file name=".php_cs.dist" />

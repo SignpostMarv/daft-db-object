@@ -77,9 +77,14 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     protected static function DaftObjectIdPropertiesFromType(string $type, $id) : array
     {
         /**
+        * @var array<mixed, string> $idProps
+        */
+        $idProps = $type::DaftObjectIdProperties();
+
+        /**
         * @var array<int, string> $idProps
         */
-        $idProps = array_values($type::DaftObjectIdProperties());
+        $idProps = array_values($idProps);
 
         if (is_scalar($id) && 1 === count($idProps)) {
             $id = [$id];
@@ -90,8 +95,15 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         */
         $idkv = [];
 
+        if (is_array($id)) {
         foreach ($idProps as $i => $prop) {
-            $idkv[$prop] = $id[$i];
+            /**
+            * @var scalar|null|array|object $propVal
+            */
+            $propVal = $id[$i];
+
+            $idkv[$prop] = $propVal;
+        }
         }
 
         return $idkv;
@@ -170,7 +182,12 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         * @var string $col
         */
         foreach ($cols as $col) {
-            $values[$col] = $object->$col;
+            /**
+            * @var scalar|null|array|object $colVal
+            */
+            $colVal = $object->$col;
+
+            $values[$col] = $colVal;
         }
 
         return $this->ModifyTypesForDatabase($values);
@@ -198,7 +215,12 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         * @var string $prop
         */
         foreach ($object::DaftObjectIdProperties() as $prop) {
-            $id[$prop] = $object->$prop;
+            /**
+            * @var scalar|null|array|object $propVal
+            */
+            $propVal = $object->$prop;
+
+            $id[$prop] = $propVal;
         }
 
         $this->db->tryFlatTransaction(function () use ($id, $object) : void {

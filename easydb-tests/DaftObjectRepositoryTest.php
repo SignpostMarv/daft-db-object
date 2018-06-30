@@ -48,6 +48,18 @@ class DaftObjectRepositoryTest extends Base
         $ref = (new ReflectionObject($repo))->getMethod('RecallDaftObjectFromData');
         $ref->setAccessible(true);
 
-        static::assertSame($instance->GetFoo(), $ref->invoke($repo, 1)->GetId());
+        /**
+        * @var \SignpostMarv\DaftObject\IntegerIdBasedDaftObject|null $obj
+        */
+        $obj = $ref->invoke($repo, 1);
+
+        static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
+
+        /**
+        * @var IntegerIdBasedDaftObject $obj
+        */
+        $obj = $obj;
+
+        static::assertSame($instance->GetFoo(), $obj->GetId());
     }
 }
