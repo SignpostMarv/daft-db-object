@@ -96,14 +96,14 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $idkv = [];
 
         if (is_array($id)) {
-        foreach ($idProps as $i => $prop) {
-            /**
-            * @var scalar|null|array|object $propVal
-            */
-            $propVal = $id[$i];
+            foreach ($idProps as $i => $prop) {
+                /**
+                * @var scalar|null|array|object $propVal
+                */
+                $propVal = $id[$i];
 
-            $idkv[$prop] = $propVal;
-        }
+                $idkv[$prop] = $propVal;
+            }
         }
 
         return $idkv;
