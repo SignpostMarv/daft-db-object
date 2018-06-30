@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "771461f1a87b671b6c35c269787aef46",
+    "content-hash": "98b5119f47baa16378d7c878ccbe1a41",
     "packages": [
         {
             "name": "paragonie/easydb",
@@ -68,16 +68,16 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "v0.11.2",
+            "version": "v0.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "b6f609a131a0a17756189128b47661abe4eaf146"
+                "reference": "be4cfbcdbeee13246dcbfba14a5e66e9c5afc4de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/b6f609a131a0a17756189128b47661abe4eaf146",
-                "reference": "b6f609a131a0a17756189128b47661abe4eaf146",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/be4cfbcdbeee13246dcbfba14a5e66e9c5afc4de",
+                "reference": "be4cfbcdbeee13246dcbfba14a5e66e9c5afc4de",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
                 "povils/phpmnd": "^2.0",
                 "sebastian/phpcpd": "^4.0",
                 "signpostmarv/php-cs-fixer-config": "^0.5.1",
-                "vimeo/psalm": "^2.0"
+                "vimeo/psalm": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -113,7 +113,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2018-06-27T20:42:31+00:00"
+            "time": "2018-06-30T18:07:41+00:00"
         }
     ],
     "packages-dev": [
