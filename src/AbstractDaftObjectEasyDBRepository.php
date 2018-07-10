@@ -69,6 +69,34 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $this->ForgetDaftObjectById($id);
     }
 
+    public function RememberDaftObjectData(
+        DefinesOwnIdPropertiesInterface $object,
+        bool $assumeDoesNotExist = false
+    ) : void {
+        /**
+        * @var array<string, mixed> $id
+        */
+        $id = [];
+
+        /**
+        * @var string $prop
+        */
+        foreach ($object::DaftObjectIdProperties() as $prop) {
+            /**
+            * @var scalar|null|array|object $propVal
+            */
+            $propVal = $object->$prop;
+
+            $id[$prop] = $propVal;
+        }
+
+        $this->db->tryFlatTransaction(function () use ($id, $object, $assumeDoesNotExist) : void {
+            $exists = $assumeDoesNotExist ? false : $this->DaftObjectExistsInDatabase($id);
+            $values = $this->RememberDaftObjectDataValues($object, $exists);
+            $this->RememberDaftObjectDataUpdate($exists, $id, $values);
+        });
+    }
+
     /**
     * @param mixed $id
     *
@@ -202,34 +230,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 $this->db->update($this->DaftObjectDatabaseTable(), $values, $id);
             }
         }
-    }
-
-    public function RememberDaftObjectData(
-        DefinesOwnIdPropertiesInterface $object,
-        bool $assumeDoesNotExist = false
-    ) : void {
-        /**
-        * @var array<string, mixed> $id
-        */
-        $id = [];
-
-        /**
-        * @var string $prop
-        */
-        foreach ($object::DaftObjectIdProperties() as $prop) {
-            /**
-            * @var scalar|null|array|object $propVal
-            */
-            $propVal = $object->$prop;
-
-            $id[$prop] = $propVal;
-        }
-
-        $this->db->tryFlatTransaction(function () use ($id, $object, $assumeDoesNotExist) : void {
-            $exists = $assumeDoesNotExist ? false : $this->DaftObjectExistsInDatabase($id);
-            $values = $this->RememberDaftObjectDataValues($object, $exists);
-            $this->RememberDaftObjectDataUpdate($exists, $id, $values);
-        });
     }
 
     /**
