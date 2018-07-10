@@ -204,8 +204,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
     }
 
-    protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
-    {
+    public function RememberDaftObjectData(
+        DefinesOwnIdPropertiesInterface $object,
+        bool $assumeDoesNotExist = false
+    ) : void {
         /**
         * @var array<string, mixed> $id
         */
@@ -223,8 +225,8 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $id[$prop] = $propVal;
         }
 
-        $this->db->tryFlatTransaction(function () use ($id, $object) : void {
-            $exists = $this->DaftObjectExistsInDatabase($id);
+        $this->db->tryFlatTransaction(function () use ($id, $object, $assumeDoesNotExist) : void {
+            $exists = $assumeDoesNotExist ? false : $this->DaftObjectExistsInDatabase($id);
             $values = $this->RememberDaftObjectDataValues($object, $exists);
             $this->RememberDaftObjectDataUpdate($exists, $id, $values);
         });
