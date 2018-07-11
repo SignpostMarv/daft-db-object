@@ -282,7 +282,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $data[0];
     }
 
-    private function DaftObjectExistsInDatabase(array $id) : bool
+    protected function DaftObjectExistsInDatabase(array $id) : bool
     {
         $where = [];
         /**
