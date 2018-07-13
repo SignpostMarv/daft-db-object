@@ -48,15 +48,16 @@
         "php": "^7.1",
         "ext-mbstring": "*",
         "paragonie/easydb": "^2.4",
-        "signpostmarv/daft-object": "^0.12.1"
+        "signpostmarv/daft-object": "^0.12.2"
     },
     "require-dev": {
-        "maglnet/composer-require-checker": "dev-master",
-        "phpstan/phpstan": "^0.10.0",
+        "maglnet/composer-require-checker": "^1.0",
+        "phpstan/phpstan": "^0.10.1",
         "phpstan/phpstan-phpunit": "^0.10.0",
         "phpstan/phpstan-strict-rules": "^0.10.0",
         "phpunit/phpunit": "^7.2",
         "povils/phpmnd": "^2.0",
+        "roave/security-advisories": "dev-master",
         "sebastian/phpcpd": "^4.0",
         "signpostmarv/php-cs-fixer-config": "^0.5.1",
         "vimeo/psalm": "^2.0"
