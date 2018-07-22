@@ -1,5 +1,8 @@
 <phpunit bootstrap="phpunit-bootstrap.php">
   <testsuites>
+    <testsuite name="DaftObject">
+      <directory>./vendor/signpostmarv/daft-object/Tests/</directory>
+    </testsuite>
     <testsuite name="DaftObjectEasyDBRepository">
       <directory>./easydb-tests/</directory>
     </testsuite>
