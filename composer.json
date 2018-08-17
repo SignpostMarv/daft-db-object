@@ -48,14 +48,14 @@
         "php": "^7.1",
         "ext-mbstring": "*",
         "paragonie/easydb": "^2.4",
-        "signpostmarv/daft-object": "^0.12.3"
+        "signpostmarv/daft-object": "^0.13.0"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "^1.0",
-        "phpstan/phpstan": "^0.10.1",
+        "phpstan/phpstan": "^0.10.3",
         "phpstan/phpstan-phpunit": "^0.10.0",
-        "phpstan/phpstan-strict-rules": "^0.10.0",
-        "phpunit/phpunit": "^7.2",
+        "phpstan/phpstan-strict-rules": "^0.10.1",
+        "phpunit/phpunit": "^7.3",
         "povils/phpmnd": "^2.0",
         "roave/security-advisories": "dev-master",
         "sebastian/phpcpd": "^4.0",
