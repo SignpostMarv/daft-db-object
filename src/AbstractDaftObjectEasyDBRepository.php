@@ -73,9 +73,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = false
     ) : void {
-        /**
-        * @var array<string, mixed> $id
-        */
         $id = [];
 
         /**
@@ -105,14 +102,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     protected static function DaftObjectIdPropertiesFromType(string $type, $id) : array
     {
         /**
-        * @var array<mixed, string> $idProps
-        */
-        $idProps = $type::DaftObjectIdProperties();
-
-        /**
         * @var array<int, string> $idProps
         */
-        $idProps = array_values($idProps);
+        $idProps = array_values((array) $type::DaftObjectIdProperties());
 
         if (is_scalar($id) && 1 === count($idProps)) {
             $id = [$id];
@@ -186,6 +178,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     protected function RememberDaftObjectDataCols(DaftObject $object, bool $exists) : array
     {
         $cols = $object::DaftObjectExportableProperties();
+
         if ($exists) {
             $changed = $object->ChangedProperties();
             $cols = array_filter($cols, function (string $prop) use ($changed) : bool {
@@ -206,6 +199,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         */
         $values = [];
         $cols = $this->RememberDaftObjectDataCols($object, $exists);
+
         /**
         * @var string $col
         */
@@ -242,6 +236,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $this->RecallDaftObjectFromQuery($idkv);
     }
 
+    /**
+    * @param array<string, mixed> $idkv
+    */
     protected function RecallDaftObjectFromQuery(array $idkv) : ? DefinesOwnIdPropertiesInterface
     {
         if (true === $this->DaftObjectExistsInDatabase($idkv)) {
@@ -282,12 +279,13 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $data[0];
     }
 
+    /**
+    * @param array<string, mixed> $id
+    */
     protected function DaftObjectExistsInDatabase(array $id) : bool
     {
         $where = [];
-        /**
-        * @var string $col
-        */
+
         foreach (array_keys($id) as $col) {
             $where[] = $this->db->escapeIdentifier($col) . ' = ?';
         }
