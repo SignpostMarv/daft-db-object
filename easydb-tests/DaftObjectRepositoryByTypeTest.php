@@ -28,16 +28,19 @@ class DaftObjectRepositoryByTypeTest extends Base
                 TestObjectRepository::class,
                 DaftObjectNullStub::class,
                 DaftObjectCreatedByArray::class,
+                null,
             ],
             [
                 TestObjectRepository::class,
                 DaftObjectNullStubCreatedByArray::class,
                 DefinesOwnIdPropertiesInterface::class,
+                null,
             ],
             [
                 TestObjectRepository::class,
                 '-foo',
                 DaftObjectCreatedByArray::class,
+                null,
             ],
         ];
     }
@@ -54,12 +57,15 @@ class DaftObjectRepositoryByTypeTest extends Base
     }
 
     /**
+    * @param mixed ...$additionalArgs
+    *
     * @dataProvider dataProviderDatabaseConnectionNotSpecifiedException
     */
     public function testDatabaseConnectionNotSpecifiedException(
         string $implementation,
         string $dbImplementation,
-        string $objectImplementation
+        string $objectImplementation,
+        ...$additionalArgs
     ) : void {
         if (static::MaybeSkipTestIfNotImplementation($implementation, 1, __METHOD__)) {
             return;
@@ -76,7 +82,7 @@ class DaftObjectRepositoryByTypeTest extends Base
             )
         );
 
-        $implementation::DaftObjectRepositoryByType($objectImplementation);
+        $implementation::DaftObjectRepositoryByType($objectImplementation, ...$additionalArgs);
     }
 
     protected function MaybeSkipTestIfNotImplementation(
