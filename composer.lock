@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d02568f070ce944d27090c3691df872a",
+    "content-hash": "7eec9e101b16efb870cd816eee114a78",
     "packages": [
         {
             "name": "paragonie/easydb",
@@ -68,16 +68,16 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "v0.13.2",
+            "version": "v0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "f2138023c458f2d91bc385e00866cd864d7a4d2f"
+                "reference": "de8688822f0a39b2c69ebfe8f501d87e7d8de4ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/f2138023c458f2d91bc385e00866cd864d7a4d2f",
-                "reference": "f2138023c458f2d91bc385e00866cd864d7a4d2f",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/de8688822f0a39b2c69ebfe8f501d87e7d8de4ba",
+                "reference": "de8688822f0a39b2c69ebfe8f501d87e7d8de4ba",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +114,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2018-08-23T20:00:19+00:00"
+            "time": "2018-09-26T20:15:48+00:00"
         }
     ],
     "packages-dev": [
@@ -2492,17 +2492,6 @@
         {
             "name": "roave/security-advisories",
             "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "0abc14e0df387fe74b4b32e0b8647d1639256d38"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0abc14e0df387fe74b4b32e0b8647d1639256d38",
-                "reference": "0abc14e0df387fe74b4b32e0b8647d1639256d38",
-                "shasum": ""
-            },
             "conflict": {
                 "3f/pygmentize": "<1.2",
                 "adodb/adodb-php": "<5.20.12",

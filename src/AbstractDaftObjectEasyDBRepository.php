@@ -23,10 +23,20 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $this->db = $db;
     }
 
+    /**
+    * {@inheritdoc}
+    *
+    * @psalm-suppress TooManyArguments
+    */
     public static function DaftObjectRepositoryByType(
         string $type,
-        ? EasyDB $db = null
+        ...$args
     ) : DaftObjectRepository {
+        /**
+        * @var EasyDB|null $db
+        */
+        $db = array_shift($args) ?: null;
+
         $a = is_a($type, DaftObjectCreatedByArray::class, true);
         if (
             false === $a ||
@@ -43,16 +53,24 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
         $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired($db, 2, __FUNCTION__);
 
-        return new static($type, $db);
+        return new static($type, $db, ...$args);
     }
 
+    /**
+    * {@inheritdoc}
+    */
     public static function DaftObjectRepositoryByDaftObject(
         DefinesOwnIdPropertiesInterface $object,
-        ? EasyDB $db = null
+        ...$args
     ) : DaftObjectRepository {
+        /**
+        * @var EasyDB|null $db
+        */
+        $db = array_shift($args) ?: null;
+
         $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired($db, 2, __FUNCTION__);
 
-        return static::DaftObjectRepositoryByType(get_class($object), $db);
+        return static::DaftObjectRepositoryByType(get_class($object), $db, ...$args);
     }
 
     /**
