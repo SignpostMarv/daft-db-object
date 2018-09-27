@@ -17,16 +17,17 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     protected $db;
 
-    protected function __construct(string $type, EasyDB $db)
+    /**
+    * @param mixed ...$args
+    */
+    protected function __construct(string $type, EasyDB $db, ...$args)
     {
-        parent::__construct($type);
+        parent::__construct($type, ...$args);
         $this->db = $db;
     }
 
     /**
     * {@inheritdoc}
-    *
-    * @psalm-suppress TooManyArguments
     */
     public static function DaftObjectRepositoryByType(
         string $type,
