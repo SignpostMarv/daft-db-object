@@ -77,17 +77,17 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         return $this->RecallDaftObjectFromQuery($idkv);
     }
 
-    protected function DaftObjectDatabaseTable() : string
-    {
-        return (string) preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
-    }
-
     /**
     * @param mixed $id
     */
     public static function DaftObjectIdPropertiesFromTypeMadePublic(string $type, $id) : array
     {
         return static::DaftObjectIdPropertiesFromType($type, $id);
+    }
+
+    protected function DaftObjectDatabaseTable() : string
+    {
+        return (string) preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
     }
 
     protected static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string
