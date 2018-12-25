@@ -35,7 +35,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         ...$args
     ) : DaftObjectRepository {
         /**
-        * @var EasyDB|null $db
+        * @var EasyDB|null
         */
         $db = array_shift($args) ?: null;
 
@@ -66,7 +66,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         ...$args
     ) : DaftObjectRepository {
         /**
-        * @var EasyDB|null $db
+        * @var EasyDB|null
         */
         $db = array_shift($args) ?: null;
 
@@ -96,11 +96,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $id = [];
 
         /**
-        * @var string $prop
+        * @var string
         */
         foreach ($object::DaftObjectIdProperties() as $prop) {
             /**
-            * @var scalar|null|array|object $propVal
+            * @var scalar|null|array|object
             */
             $propVal = $object->$prop;
 
@@ -134,7 +134,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
 
         /**
-        * @var array<int, string> $idProps
+        * @var array<int, string>
         */
         $idProps = array_values((array) $type::DaftObjectIdProperties());
 
@@ -143,14 +143,14 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
 
         /**
-        * @var array<string, mixed> $idkv
+        * @var array<string, mixed>
         */
         $idkv = [];
 
         if (is_array($id)) {
             foreach ($idProps as $i => $prop) {
                 /**
-                * @var scalar|null|array|object $propVal
+                * @var scalar|null|array|object
                 */
                 $propVal = $id[$i];
 
@@ -185,7 +185,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     protected function ModifyTypesForDatabase(array $values) : array
     {
         /**
-        * @var array<string, mixed> $out
+        * @var array<string, mixed>
         */
         $out = array_map(
             /**
@@ -233,11 +233,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $cols = $this->RememberDaftObjectDataCols($object, $exists);
 
         /**
-        * @var string $col
+        * @var string
         */
         foreach ($cols as $col) {
             /**
-            * @var scalar|null|array|object $colVal
+            * @var scalar|null|array|object
             */
             $colVal = $object->$col;
 
@@ -288,7 +288,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             }
 
             /**
-            * @var DefinesOwnIdPropertiesInterface $out
+            * @var DefinesOwnIdPropertiesInterface
             */
             $out = new $type($this->RecallDaftObjectDataFromQuery($idkv));
 
@@ -301,7 +301,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     protected function RecallDaftObjectDataFromQuery(array $idkv) : array
     {
         /**
-        * @var array[] $data
+        * @var array[]
         */
         $data = $this->db->safeQuery(
             (

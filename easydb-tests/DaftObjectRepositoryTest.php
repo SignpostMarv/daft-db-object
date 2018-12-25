@@ -49,14 +49,14 @@ class DaftObjectRepositoryTest extends Base
         $ref->setAccessible(true);
 
         /**
-        * @var \SignpostMarv\DaftObject\IntegerIdBasedDaftObject|null $obj
+        * @var \SignpostMarv\DaftObject\IntegerIdBasedDaftObject|null
         */
         $obj = $ref->invoke($repo, 1);
 
         static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
 
         /**
-        * @var IntegerIdBasedDaftObject $obj
+        * @var IntegerIdBasedDaftObject
         */
         $obj = $obj;
 

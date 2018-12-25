@@ -22,7 +22,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         parent::__construct($type, $db);
 
         /**
-        * @var DefinesOwnIdPropertiesInterface $type
+        * @var DefinesOwnIdPropertiesInterface
         */
         $type = $type;
 
@@ -37,7 +37,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
             $methodName = 'Get' . ucfirst($prop);
             if (true === $ref->hasMethod($methodName)) {
                 /**
-                * @var ReflectionType $refReturn
+                * @var ReflectionType
                 */
                 $refReturn = $ref->getMethod($methodName)->getReturnType();
                 $queryPart =
