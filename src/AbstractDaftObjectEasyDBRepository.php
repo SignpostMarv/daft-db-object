@@ -267,7 +267,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     protected function RecallDaftObjectFromQuery(array $idkv) : ? DefinesOwnIdPropertiesInterface
     {
-        if (true === $this->DaftObjectExistsInDatabase($idkv)) {
             $type = $this->type;
 
             if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
@@ -281,6 +280,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 );
             }
 
+        if (true === $this->DaftObjectExistsInDatabase($idkv)) {
             /**
             * @var DefinesOwnIdPropertiesInterface
             */

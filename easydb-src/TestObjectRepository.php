@@ -14,6 +14,7 @@ use ReflectionType;
 use RuntimeException;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use stdClass;
 
 class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 {
@@ -65,9 +66,28 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         $db->safeQuery($query);
     }
 
+    /**
+    * @param array<string, mixed> $idkv
+    */
+    public function RecallDaftObjectFromQueryStdClassType(
+        array $idkv
+    ) : ? DefinesOwnIdPropertiesInterface {
+        $this->type = stdClass::class;
+
+        return $this->RecallDaftObjectFromQuery($idkv);
+    }
+
     protected function DaftObjectDatabaseTable() : string
     {
         return (string) preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
+    }
+
+    /**
+    * @param mixed $id
+    */
+    public static function DaftObjectIdPropertiesFromTypeMadePublic(string $type, $id) : array
+    {
+        return static::DaftObjectIdPropertiesFromType($type, $id);
     }
 
     protected static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string
