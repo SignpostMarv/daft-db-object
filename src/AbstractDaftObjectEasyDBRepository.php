@@ -95,9 +95,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     ) : void {
         $id = [];
 
-        /**
-        * @var string
-        */
         foreach ($object::DaftObjectIdProperties() as $prop) {
             /**
             * @var scalar|null|array|object
@@ -232,9 +229,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $values = [];
         $cols = $this->RememberDaftObjectDataCols($object, $exists);
 
-        /**
-        * @var string
-        */
         foreach ($cols as $col) {
             /**
             * @var scalar|null|array|object
