@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+use InvalidArgumentException;
 use ParagonIE\EasyDB\EasyDB;
 
 abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryRepository
@@ -120,6 +121,18 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     protected static function DaftObjectIdPropertiesFromType(string $type, $id) : array
     {
+        if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class .
+                ', ' .
+                $type .
+                ' given!'
+            );
+        }
+
         /**
         * @var array<int, string> $idProps
         */
@@ -262,6 +275,17 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     {
         if (true === $this->DaftObjectExistsInDatabase($idkv)) {
             $type = $this->type;
+
+            if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
+                throw new InvalidArgumentException(
+                    static::class .
+                    '::$type must be an implementation of ' .
+                    DefinesOwnIdPropertiesInterface::class .
+                    ', ' .
+                    $type .
+                    ' given!'
+                );
+            }
 
             /**
             * @var DefinesOwnIdPropertiesInterface $out

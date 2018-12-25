@@ -67,8 +67,10 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $objectImplementation,
         ...$additionalArgs
     ) : void {
+        if ( ! is_a($implementation, AbstractDaftObjectEasyDBRepository::class, true)) {
         if (static::MaybeSkipTestIfNotImplementation($implementation, 1, __METHOD__)) {
             return;
+        }
         }
 
         static::expectException(DatabaseConnectionNotSpecifiedException::class);
