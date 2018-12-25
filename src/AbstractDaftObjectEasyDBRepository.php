@@ -271,8 +271,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
         if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
             throw new InvalidArgumentException(
-                static::class .
-                '::$type must be an implementation of ' .
+                static::class . '::$type must be an implementation of ' .
                 DefinesOwnIdPropertiesInterface::class .
                 ', ' .
                 $type .
