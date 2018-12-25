@@ -267,18 +267,18 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     protected function RecallDaftObjectFromQuery(array $idkv) : ? DefinesOwnIdPropertiesInterface
     {
-            $type = $this->type;
+        $type = $this->type;
 
-            if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
-                throw new InvalidArgumentException(
-                    static::class .
-                    '::$type must be an implementation of ' .
-                    DefinesOwnIdPropertiesInterface::class .
-                    ', ' .
-                    $type .
-                    ' given!'
-                );
-            }
+        if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
+            throw new InvalidArgumentException(
+                static::class .
+                '::$type must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class .
+                ', ' .
+                $type .
+                ' given!'
+            );
+        }
 
         if (true === $this->DaftObjectExistsInDatabase($idkv)) {
             /**
