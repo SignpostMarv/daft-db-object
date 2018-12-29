@@ -48,7 +48,7 @@
         "php": "^7.1",
         "ext-mbstring": "*",
         "paragonie/easydb": "^2.7",
-        "signpostmarv/daft-object": "^0.16.0"
+        "signpostmarv/daft-object": "^0.16.1"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "^1.1",
