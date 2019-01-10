@@ -11,6 +11,7 @@ namespace SignpostMarv\DaftObject\EasyDB\Tests;
 use InvalidArgumentException;
 use ParagonIE\EasyDB\Factory;
 use ReflectionObject;
+use RuntimeException;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
@@ -21,6 +22,10 @@ use stdClass;
 
 class DaftObjectRepositoryTest extends Base
 {
+    const EXAMPLE_ID = 1;
+
+    const BOOL_FORCE_METHOD_ACCESSIBLE = true;
+
     public static function DaftObjectRepositoryByType(string $type) : DaftObjectRepository
     {
         return TestObjectRepository::DaftObjectRepositoryByType(
@@ -40,28 +45,27 @@ class DaftObjectRepositoryTest extends Base
 
     public function testScalarRecall() : void
     {
-        $instance = new IntegerIdBasedDaftObject(['Foo' => 1]);
+        $instance = new IntegerIdBasedDaftObject(['Foo' => self::EXAMPLE_ID]);
 
         $repo = static::DaftObjectRepositoryByDaftObject($instance);
 
         $repo->RememberDaftObject($instance);
 
-        static::assertSame($instance, $repo->RecallDaftObject(1));
+        static::assertSame($instance, $repo->RecallDaftObject(self::EXAMPLE_ID));
 
         $ref = (new ReflectionObject($repo))->getMethod('RecallDaftObjectFromData');
-        $ref->setAccessible(true);
+        $ref->setAccessible(self::BOOL_FORCE_METHOD_ACCESSIBLE);
 
         /**
         * @var \SignpostMarv\DaftObject\IntegerIdBasedDaftObject|null
         */
-        $obj = $ref->invoke($repo, 1);
+        $obj = $ref->invoke($repo, self::EXAMPLE_ID);
 
+        if ( ! ($obj instanceof IntegerIdBasedDaftObject)) {
         static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
 
-        /**
-        * @var IntegerIdBasedDaftObject
-        */
-        $obj = $obj;
+            return;
+        }
 
         static::assertSame($instance->GetFoo(), $obj->GetId());
     }
@@ -79,12 +83,15 @@ class DaftObjectRepositoryTest extends Base
             ' given!'
         );
 
-        TestObjectRepository::DaftObjectIdPropertiesFromTypeMadePublic(stdClass::class, 1);
+        TestObjectRepository::DaftObjectIdPropertiesFromTypeMadePublic(
+            stdClass::class,
+            self::EXAMPLE_ID
+        );
     }
 
     public function testDaftObjectFromQueryStdClassType() : void
     {
-        $instance = new IntegerIdBasedDaftObject(['Foo' => 1]);
+        $instance = new IntegerIdBasedDaftObject(['Foo' => self::EXAMPLE_ID]);
 
         /**
         * @var TestObjectRepository
@@ -104,6 +111,6 @@ class DaftObjectRepositoryTest extends Base
             ' given!'
         );
 
-        $repo->RecallDaftObjectFromQueryStdClassType(['Foo' => 1]);
+        $repo->RecallDaftObjectFromQueryStdClassType(['Foo' => self::EXAMPLE_ID]);
     }
 }

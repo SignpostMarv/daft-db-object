@@ -14,6 +14,7 @@ use ReflectionType;
 use RuntimeException;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\TypeParanoia;
 use stdClass;
 
 class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
@@ -34,9 +35,10 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         $ref = new ReflectionClass($type);
         $nullables = $type::DaftObjectNullableProperties();
 
-        foreach ($type::DaftObjectProperties() as $i => $prop) {
-            $methodName = 'Get' . ucfirst($prop);
-            if (true === $ref->hasMethod($methodName)) {
+        $queryParts = array_map(
+            function (string $prop) use ($ref, $db, $nullables) : string {
+                $methodName = 'Get' . ucfirst($prop);
+
                 /**
                 * @var ReflectionType
                 */
@@ -44,26 +46,24 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                 $queryPart =
                     $db->escapeIdentifier($prop) .
                     static::QueryPartTypeFromRefReturn($refReturn);
-                if (false === in_array($prop, $nullables, true)) {
-                    $queryPart .= ' NOT NULL';
+                if ( ! TypeParanoia::MaybeInArray($prop, $nullables)) {
+                    return $queryPart . ' NOT NULL';
                 }
 
-                $queryParts[] = $queryPart;
-            }
-        }
+                return $queryPart;
+            },
+            array_filter($type::DaftObjectProperties(), function (string $prop) use ($ref) : bool {
+                return $ref->hasMethod('Get' . ucfirst($prop));
+            })
+        );
 
-        $primaryKeyCols = [];
-        foreach ($type::DaftObjectIdProperties() as $col) {
-            $primaryKeyCols[] = $db->escapeIdentifier($col);
-        }
+        $primaryKeyCols = array_map([$db, 'escapeIdentifier'], $type::DaftObjectIdProperties());
 
         if (count($primaryKeyCols) > 0) {
             $queryParts[] = 'PRIMARY KEY (' . implode(',', $primaryKeyCols) . ')';
         }
 
-        $query .= implode(',', $queryParts) . ');';
-
-        $db->safeQuery($query);
+        $db->safeQuery($query . implode(',', $queryParts) . ');');
     }
 
     /**
@@ -87,7 +87,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
     protected function DaftObjectDatabaseTable() : string
     {
-        return (string) preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
+        return preg_replace('/[^a-z]+/', '_', mb_strtolower($this->type));
     }
 
     protected static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string

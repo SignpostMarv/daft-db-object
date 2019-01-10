@@ -17,6 +17,7 @@ use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\ReadWrite;
+use SignpostMarv\DaftObject\TypeParanoia;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryByTypeTest as Base;
 
 class DaftObjectRepositoryByTypeTest extends Base
@@ -67,10 +68,20 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $objectImplementation,
         ...$additionalArgs
     ) : void {
-        if ( ! is_a($implementation, AbstractDaftObjectEasyDBRepository::class, true)) {
-            if (static::MaybeSkipTestIfNotImplementation($implementation, 1, __METHOD__)) {
+        if (
+            ! TypeParanoia::IsThingStrings(
+                $implementation,
+                AbstractDaftObjectEasyDBRepository::class
+            )
+        ) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                AbstractDaftObjectEasyDBRepository::class
+            );
+
                 return;
-            }
         }
 
         static::expectException(DatabaseConnectionNotSpecifiedException::class);
@@ -85,26 +96,5 @@ class DaftObjectRepositoryByTypeTest extends Base
         );
 
         $implementation::DaftObjectRepositoryByType($objectImplementation, ...$additionalArgs);
-    }
-
-    protected function MaybeSkipTestIfNotImplementation(
-        string $implementation,
-        int $argument,
-        string $method
-    ) : bool {
-        if (false === is_a($implementation, AbstractDaftObjectEasyDBRepository::class, true)) {
-            static::markTestSkipped(
-                'Argument ' .
-                (string) $argument .
-                ' passed to ' .
-                $method .
-                ' must be an implementation of ' .
-                AbstractDaftObjectEasyDBRepository::class
-            );
-
-            return true;
-        }
-
-        return false;
     }
 }

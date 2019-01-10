@@ -13,6 +13,14 @@ use ParagonIE\EasyDB\EasyDB;
 
 abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryRepository
 {
+    const ARG_SECOND = 2;
+
+    const BOOL_DOES_NOT_EXIST = false;
+
+    const BOOL_TRUE_AS_INT = 1;
+
+    const BOOL_FALSE_AS_INT = 0;
+
     /**
     * @var EasyDB
     */
@@ -53,7 +61,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             );
         }
 
-        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired($db, 2, __FUNCTION__);
+        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired(
+            $db,
+            self::ARG_SECOND,
+            __FUNCTION__
+        );
 
         return new static($type, $db, ...$args);
     }
@@ -70,7 +82,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         */
         $db = array_shift($args) ?: null;
 
-        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired($db, 2, __FUNCTION__);
+        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired(
+            $db,
+            self::ARG_SECOND,
+            __FUNCTION__
+        );
 
         return static::DaftObjectRepositoryByType(get_class($object), $db, ...$args);
     }
@@ -105,7 +121,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
 
         $this->db->tryFlatTransaction(function () use ($id, $object, $assumeDoesNotExist) : void {
-            $exists = $assumeDoesNotExist ? false : $this->DaftObjectExistsInDatabase($id);
+            $exists =
+                $assumeDoesNotExist
+                    ? self::BOOL_DOES_NOT_EXIST
+                    : $this->DaftObjectExistsInDatabase($id);
             $values = $this->RememberDaftObjectDataValues($object, $exists);
             $this->RememberDaftObjectDataUpdate($exists, $id, $values);
         });
@@ -133,7 +152,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         /**
         * @var array<int, string>
         */
-        $idProps = array_values((array) $type::DaftObjectIdProperties());
+        $idProps = array_values($type::DaftObjectIdProperties());
 
         if (is_scalar($id) && 1 === count($idProps)) {
             $id = [$id];
@@ -191,7 +210,14 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             * @return mixed
             */
             function ($val) {
-                return is_bool($val) ? (int) $val : $val;
+                return
+                    is_bool($val)
+                        ? (
+                            $val
+                                ? self::BOOL_TRUE_AS_INT
+                                : self::BOOL_FALSE_AS_INT
+                        )
+                        : $val;
             },
             $values
         );
@@ -211,7 +237,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         if ($exists) {
             $changed = $object->ChangedProperties();
             $cols = array_filter($cols, function (string $prop) use ($changed) : bool {
-                return in_array($prop, $changed, true);
+                return TypeParanoia::MaybeInArray($prop, $changed);
             });
         }
 
@@ -291,6 +317,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return null;
     }
 
+    /**
+    * @param array<string, mixed> $idkv
+    */
     protected function RecallDaftObjectDataFromQuery(array $idkv) : array
     {
         /**
@@ -327,7 +356,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
 
         return
-            (int) $this->db->single(
+            $this->db->single(
                 (
                     'SELECT COUNT(*) FROM ' .
                     $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
