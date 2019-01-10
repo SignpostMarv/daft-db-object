@@ -81,7 +81,7 @@ class DaftObjectRepositoryByTypeTest extends Base
                 AbstractDaftObjectEasyDBRepository::class
             );
 
-                return;
+            return;
         }
 
         static::expectException(DatabaseConnectionNotSpecifiedException::class);

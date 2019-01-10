@@ -62,7 +62,7 @@ class DaftObjectRepositoryTest extends Base
         $obj = $ref->invoke($repo, self::EXAMPLE_ID);
 
         if ( ! ($obj instanceof IntegerIdBasedDaftObject)) {
-        static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
+            static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
 
             return;
         }
