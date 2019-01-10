@@ -3,7 +3,7 @@
     name="Example Psalm config with recommended defaults"
     useDocblockTypes="true"
     totallyTyped="true"
-    errorBaseline="./psalm.baseline.xml"
+    requireVoidReturnType="false"
 >
     <projectFiles>
         <file name=".php_cs.dist" />

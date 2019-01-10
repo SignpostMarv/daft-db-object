@@ -94,7 +94,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * @param mixed $id
     */
-    public function RemoveDaftObjectById($id) : void
+    public function RemoveDaftObjectById($id)
     {
         $id = array_values(is_array($id) ? $id : [$id]);
 
@@ -108,7 +108,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = false
-    ) : void {
+    ) {
         $id = [];
 
         foreach ($object::DaftObjectIdProperties() as $prop) {
@@ -120,7 +120,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $id[$prop] = $propVal;
         }
 
-        $this->db->tryFlatTransaction(function () use ($id, $object, $assumeDoesNotExist) : void {
+        $this->db->tryFlatTransaction(function () use ($id, $object, $assumeDoesNotExist) {
             $exists =
                 $assumeDoesNotExist
                     ? self::BOOL_DOES_NOT_EXIST
@@ -152,7 +152,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         /**
         * @var array<int, string>
         */
-        $idProps = array_values($type::DaftObjectIdProperties());
+        $idProps = array_values((array) $type::DaftObjectIdProperties());
 
         if (is_scalar($id) && 1 === count($idProps)) {
             $id = [$id];
@@ -178,9 +178,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     }
 
     protected static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
-        ? EasyDB $db,
-        int $arg,
-        string $function
+        EasyDB $db = null,
+        int $arg = 0,
+        string $function = __METHOD__
     ) : EasyDB {
         if (false === ($db instanceof EasyDB)) {
             throw new DatabaseConnectionNotSpecifiedException(
@@ -267,7 +267,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $this->ModifyTypesForDatabase($values);
     }
 
-    protected function RememberDaftObjectDataUpdate(bool $exists, array $id, array $values) : void
+    protected function RememberDaftObjectDataUpdate(bool $exists, array $id, array $values)
     {
         if (count($values) > 0) {
             if (false === $exists) {
@@ -280,8 +280,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     /**
     * @param mixed $id
+    *
+    * @return DaftObject|null
     */
-    protected function RecallDaftObjectFromData($id) : ? DaftObject
+    protected function RecallDaftObjectFromData($id)
     {
         $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
 
@@ -290,8 +292,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     /**
     * @param array<string, mixed> $idkv
+    *
+    * @return DefinesOwnIdPropertiesInterface|null
     */
-    protected function RecallDaftObjectFromQuery(array $idkv) : ? DefinesOwnIdPropertiesInterface
+    protected function RecallDaftObjectFromQuery(array $idkv)
     {
         $type = $this->type;
 

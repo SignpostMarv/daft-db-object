@@ -19,6 +19,8 @@ use stdClass;
 
 class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 {
+    const EXPECTED_MATCH_COUNT = 2;
+
     protected function __construct(string $type, EasyDB $db)
     {
         parent::__construct($type, $db);
@@ -36,16 +38,60 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         $nullables = $type::DaftObjectNullableProperties();
 
         $queryParts = array_map(
-            function (string $prop) use ($ref, $db, $nullables) : string {
+            function (string $prop) use ($ref, $db, $nullables, $type) : string {
                 $methodName = 'Get' . ucfirst($prop);
 
+                $reflectorGetter = $ref->getMethod($methodName);
+
+                if ( ! ($reflectorGetter->hasReturnType())) {
+                    $docblock = $reflectorGetter->getDocComment();
+
+                    if (
+                        1 !== preg_match('/\* @return (.+)/', $docblock, $matches) ||
+                        self::EXPECTED_MATCH_COUNT !== count($matches) ||
+                        ! is_string($matches[1] ?? null)
+                    ) {
+                        throw new RuntimeException('Return type not found!');
+                    }
+
+                    $types = explode('|', $matches[1]);
+
+                    $validInternalTypes = [
+                        'scalar',
+                        'string',
+                        'float',
+                        'int',
+                        'bool',
+                        'array',
+                        'null',
+                    ];
+
+                    foreach ($types as $type) {
+                        if ( ! in_array($type, $validInternalTypes, true)) {
+                            if ( ! (class_exists($type) || interface_exists($type))) {
+                                throw new RuntimeException('tpye not found!');
+                            }
+                        }
+                    }
+
+                    $queryPart =
+                        $db->escapeIdentifier($prop) .
+                        static::QueryPartTypeFromString(implode(
+                            '|',
+                            array_filter($types, function (string $maybe) : bool {
+                                return 'null' !== $maybe;
+                            })
+                        ));
+                } else {
                 /**
                 * @var ReflectionType
                 */
-                $refReturn = $ref->getMethod($methodName)->getReturnType();
+                $refReturn = $reflectorGetter->getReturnType();
+
                 $queryPart =
                     $db->escapeIdentifier($prop) .
                     static::QueryPartTypeFromRefReturn($refReturn);
+                }
                 if ( ! TypeParanoia::MaybeInArray($prop, $nullables)) {
                     return $queryPart . ' NOT NULL';
                 }
@@ -68,10 +114,12 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
     /**
     * @param array<string, mixed> $idkv
+    *
+    * @return DefinesOwnIdPropertiesInterface|null
     */
     public function RecallDaftObjectFromQueryStdClassType(
         array $idkv
-    ) : ? DefinesOwnIdPropertiesInterface {
+    ) {
         $this->type = stdClass::class;
 
         return $this->RecallDaftObjectFromQuery($idkv);
@@ -98,7 +146,15 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
     protected static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string
     {
         if ($refReturn->isBuiltin()) {
-            switch ($refReturn->__toString()) {
+            return static::QueryPartTypeFromString($refReturn->__toString());
+        }
+
+        throw new RuntimeException('Only supports builtins');
+    }
+
+    protected static function QueryPartTypeFromString(string $type) : string
+    {
+            switch ($type) {
                 case 'string':
                     return ' VARCHAR(255)';
                 case 'float':
@@ -109,11 +165,8 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                 default:
                     throw new RuntimeException(sprintf(
                         'Unsupported data type! (%s)',
-                        $refReturn->__toString()
+                        $type
                     ));
             }
-        }
-
-        throw new RuntimeException('Only supports builtins');
     }
 }

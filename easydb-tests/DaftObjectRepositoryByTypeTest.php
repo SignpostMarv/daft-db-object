@@ -67,7 +67,7 @@ class DaftObjectRepositoryByTypeTest extends Base
         string $dbImplementation,
         string $objectImplementation,
         ...$additionalArgs
-    ) : void {
+    ) {
         if (
             ! TypeParanoia::IsThingStrings(
                 $implementation,

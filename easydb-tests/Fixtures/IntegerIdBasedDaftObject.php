@@ -28,7 +28,7 @@ class IntegerIdBasedDaftObject extends Base
         return (bool) $this->RetrievePropertyValueFromData('Bar');
     }
 
-    public function SetBar(bool $value) : void
+    public function SetBar(bool $value)
     {
         $this->NudgePropertyValue('Bar', $value);
     }

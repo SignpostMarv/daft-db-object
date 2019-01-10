@@ -44,12 +44,12 @@ class DaftObjectRepositoryTest extends Base
         );
     }
 
-    public function testScalarRecall() : void
+    public function testScalarRecall()
     {
         $instance = new IntegerIdBasedDaftObject(['Foo' => self::EXAMPLE_ID]);
-        static::assertFalse($instance->Bar);
+        static::assertFalse($instance->GetBar());
         $instance->Bar = true;
-        static::assertTrue($instance->Bar);
+        static::assertTrue($instance->GetBar());
 
         $repo = static::DaftObjectRepositoryByDaftObject($instance);
 
@@ -83,11 +83,17 @@ class DaftObjectRepositoryTest extends Base
         $obj = $repo->RecallDaftObject(self::EXAMPLE_ID);
 
         static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
+
+        /**
+        * @var IntegerIdBasedDaftObject
+        */
+        $obj = $obj;
+
         static::assertSame($instance->GetId(), $obj->GetId());
-        static::assertTrue($obj->Bar);
+        static::assertTrue($obj->GetBar());
     }
 
-    public function testDaftObjectIdPropertiesFromTypeMadePublic() : void
+    public function testDaftObjectIdPropertiesFromTypeMadePublic()
     {
         static::expectException(InvalidArgumentException::class);
         static::expectExceptionMessage(
@@ -106,7 +112,7 @@ class DaftObjectRepositoryTest extends Base
         );
     }
 
-    public function testDaftObjectFromQueryStdClassType() : void
+    public function testDaftObjectFromQueryStdClassType()
     {
         $instance = new IntegerIdBasedDaftObject(['Foo' => self::EXAMPLE_ID]);
 
