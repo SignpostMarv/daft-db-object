@@ -15,8 +15,8 @@ use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
-use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as Base;
 use SignpostMarv\DaftObject\EasyDB\Tests\Fixtures\IntegerIdBasedDaftObject;
+use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as Base;
 use stdClass;
 
 class DaftObjectRepositoryTest extends Base
