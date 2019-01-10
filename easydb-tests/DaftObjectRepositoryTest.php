@@ -11,7 +11,6 @@ namespace SignpostMarv\DaftObject\EasyDB\Tests;
 use InvalidArgumentException;
 use ParagonIE\EasyDB\Factory;
 use ReflectionObject;
-use RuntimeException;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;

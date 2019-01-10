@@ -17,8 +17,8 @@ use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\ReadWrite;
-use SignpostMarv\DaftObject\TypeParanoia;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryByTypeTest as Base;
+use SignpostMarv\DaftObject\TypeParanoia;
 
 class DaftObjectRepositoryByTypeTest extends Base
 {
