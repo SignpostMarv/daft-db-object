@@ -15,8 +15,8 @@ use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
-use SignpostMarv\DaftObject\IntegerIdBasedDaftObject;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as Base;
+use SignpostMarv\DaftObject\EasyDB\Tests\Fixtures\IntegerIdBasedDaftObject;
 use stdClass;
 
 class DaftObjectRepositoryTest extends Base
@@ -47,6 +47,9 @@ class DaftObjectRepositoryTest extends Base
     public function testScalarRecall() : void
     {
         $instance = new IntegerIdBasedDaftObject(['Foo' => self::EXAMPLE_ID]);
+        static::assertFalse($instance->Bar);
+        $instance->Bar = true;
+        static::assertTrue($instance->Bar);
 
         $repo = static::DaftObjectRepositoryByDaftObject($instance);
 
@@ -81,6 +84,7 @@ class DaftObjectRepositoryTest extends Base
 
         static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
         static::assertSame($instance->GetId(), $obj->GetId());
+        static::assertTrue($obj->Bar);
     }
 
     public function testDaftObjectIdPropertiesFromTypeMadePublic() : void
