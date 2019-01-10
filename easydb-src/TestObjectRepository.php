@@ -83,14 +83,14 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                             })
                         ));
                 } else {
-                /**
-                * @var ReflectionType
-                */
-                $refReturn = $reflectorGetter->getReturnType();
+                    /**
+                    * @var ReflectionType
+                    */
+                    $refReturn = $reflectorGetter->getReturnType();
 
-                $queryPart =
-                    $db->escapeIdentifier($prop) .
-                    static::QueryPartTypeFromRefReturn($refReturn);
+                    $queryPart =
+                        $db->escapeIdentifier($prop) .
+                        static::QueryPartTypeFromRefReturn($refReturn);
                 }
                 if ( ! TypeParanoia::MaybeInArray($prop, $nullables)) {
                     return $queryPart . ' NOT NULL';
@@ -154,19 +154,16 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
     protected static function QueryPartTypeFromString(string $type) : string
     {
-            switch ($type) {
-                case 'string':
-                    return ' VARCHAR(255)';
-                case 'float':
-                    return ' REAL';
-                case 'int':
-                case 'bool':
-                    return ' INTEGER';
-                default:
-                    throw new RuntimeException(sprintf(
-                        'Unsupported data type! (%s)',
-                        $type
-                    ));
-            }
+        switch ($type) {
+            case 'string':
+                return ' VARCHAR(255)';
+            case 'float':
+                return ' REAL';
+            case 'int':
+            case 'bool':
+                return ' INTEGER';
+            default:
+                throw new RuntimeException(sprintf('Unsupported data type! (%s)', $type));
+        }
     }
 }
