@@ -25,6 +25,8 @@ class DaftObjectRepositoryTest extends Base
 
     const BOOL_FORCE_METHOD_ACCESSIBLE = true;
 
+    const BOOL_TEST_ASSUME_DOES_NOT_EXIST = true;
+
     public static function DaftObjectRepositoryByType(string $type) : DaftObjectRepository
     {
         return TestObjectRepository::DaftObjectRepositoryByType(
@@ -67,6 +69,18 @@ class DaftObjectRepositoryTest extends Base
         }
 
         static::assertSame($instance->GetFoo(), $obj->GetId());
+
+        $repo->RemoveDaftObjectById($instance->GetId());
+
+        $repo->RememberDaftObjectData($instance, self::BOOL_TEST_ASSUME_DOES_NOT_EXIST);
+
+        /**
+        * @var DefinesOwnIdPropertiesInterface
+        */
+        $obj = $repo->RecallDaftObject(self::EXAMPLE_ID);
+
+        static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
+        static::assertSame($instance->GetId(), $obj->GetId());
     }
 
     public function testDaftObjectIdPropertiesFromTypeMadePublic() : void
