@@ -5,3 +5,4 @@
 /phpdoc/
 phpunit.clover
 /infection.log
+/xdebug-filter.phpunit.php
