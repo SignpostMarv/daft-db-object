@@ -112,12 +112,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $id = [];
 
         foreach ($object::DaftObjectIdProperties() as $prop) {
-            /**
-            * @var scalar|array|object|null
-            */
-            $propVal = $object->$prop;
-
-            $id[$prop] = $propVal;
+            $id[$prop] = $object->__get($prop);
         }
 
         $this->db->tryFlatTransaction(function () use ($id, $object, $assumeDoesNotExist) : void {
@@ -256,12 +251,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         $cols = $this->RememberDaftObjectDataCols($object, $exists);
 
         foreach ($cols as $col) {
-            /**
-            * @var scalar|array|object|null
-            */
-            $colVal = $object->$col;
-
-            $values[$col] = $colVal;
+            $values[$col] = $object->__get($col);
         }
 
         return $this->ModifyTypesForDatabase($values);
