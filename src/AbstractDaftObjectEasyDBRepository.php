@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-use InvalidArgumentException;
 use ParagonIE\EasyDB\EasyDB;
 
 /**
