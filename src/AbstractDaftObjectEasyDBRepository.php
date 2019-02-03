@@ -26,6 +26,8 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     const BOOL_FALSE_AS_INT = 0;
 
+    const COUNT_EMPTY_ARRAY = 0;
+
     /**
     * @var EasyDB
     */
@@ -128,17 +130,27 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 $assumeDoesNotExist
                     ? self::BOOL_DOES_NOT_EXIST
                     : $this->DaftObjectExistsInDatabase($id);
-            $values = $this->RememberDaftObjectDataValues($object, $exists);
-            $this->RememberDaftObjectDataUpdate($exists, $id, $values);
+            $cols = $this->RememberDaftObjectDataCols($object, $exists);
+
+            /**
+            * @var array<string, string>
+            */
+            $cols = array_combine($cols, $cols);
+
+            $this->RememberDaftObjectDataUpdate($exists, $id, $this->ModifyTypesForDatabase(
+                array_map([$object, '__get'], $cols)
+            ));
         });
     }
 
     /**
     * @param mixed $id
     *
+    * @psalm-param class-string<T> $type
+    *
     * @return array<string, mixed>
     */
-    protected static function DaftObjectIdPropertiesFromType(string $type, $id) : array
+    private static function DaftObjectIdPropertiesFromType(string $type, $id) : array
     {
         if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
             throw new InvalidArgumentException(
@@ -180,7 +192,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         return $idkv;
     }
 
-    protected static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
+    private static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
         ? EasyDB $db,
         int $arg,
         string $function
@@ -233,41 +245,23 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * @return string[]
     */
-    protected function RememberDaftObjectDataCols(DaftObject $object, bool $exists) : array
+    private function RememberDaftObjectDataCols(DaftObject $object, bool $exists) : array
     {
         $cols = $object::DaftObjectExportableProperties();
 
         if ($exists) {
             $changed = $object->ChangedProperties();
             $cols = array_filter($cols, function (string $prop) use ($changed) : bool {
-                return in_array($prop, $changed, true);
+                return in_array($prop, $changed, DefinitionAssistant::IN_ARRAY_STRICT_MODE);
             });
         }
 
         return $cols;
     }
 
-    /**
-    * @return array<string, mixed>
-    */
-    protected function RememberDaftObjectDataValues(DaftObject $object, bool $exists) : array
+    private function RememberDaftObjectDataUpdate(bool $exists, array $id, array $values) : void
     {
-        /**
-        * @var array<string, mixed>
-        */
-        $values = [];
-        $cols = $this->RememberDaftObjectDataCols($object, $exists);
-
-        foreach ($cols as $col) {
-            $values[$col] = $object->__get($col);
-        }
-
-        return $this->ModifyTypesForDatabase($values);
-    }
-
-    protected function RememberDaftObjectDataUpdate(bool $exists, array $id, array $values) : void
-    {
-        if (count($values) > 0) {
+        if (count($values) > self::COUNT_EMPTY_ARRAY) {
             if (false === $exists) {
                 $this->db->insert($this->DaftObjectDatabaseTable(), $values);
             } else {
@@ -282,57 +276,38 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     protected function RecallDaftObjectFromData($id) : ? DefinesOwnIdPropertiesInterface
     {
         $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
-
-        return $this->RecallDaftObjectFromQuery($idkv);
-    }
-
-    /**
-    * @param array<string, mixed> $idkv
-    *
-    * @psalm-return T
-    */
-    protected function RecallDaftObjectFromQuery(array $idkv) : ? DefinesOwnIdPropertiesInterface
-    {
         $type = $this->type;
 
         if (true === $this->DaftObjectExistsInDatabase($idkv)) {
-            return new $type($this->RecallDaftObjectDataFromQuery($idkv));
+            /**
+            * @var array[]
+            */
+            $data = $this->db->safeQuery(
+                (
+                    'SELECT * FROM ' .
+                    $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
+                    ' WHERE ' .
+                    implode(' AND ', array_map(
+                        function (string $col) : string {
+                            return $this->db->escapeIdentifier($col) . ' = ?';
+                        },
+                        array_keys($idkv)
+                    )) .
+                    ' LIMIT 1'
+                ),
+                array_values($idkv)
+            );
+
+            return new $type($data[0]);
         }
 
         return null;
     }
 
     /**
-    * @param array<string, mixed> $idkv
-    */
-    protected function RecallDaftObjectDataFromQuery(array $idkv) : array
-    {
-        /**
-        * @var array[]
-        */
-        $data = $this->db->safeQuery(
-            (
-                'SELECT * FROM ' .
-                $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
-                ' WHERE ' .
-                implode(' AND ', array_map(
-                    function (string $col) : string {
-                        return $this->db->escapeIdentifier($col) . ' = ?';
-                    },
-                    array_keys($idkv)
-                )) .
-                ' LIMIT 1'
-            ),
-            array_values($idkv)
-        );
-
-        return $data[0];
-    }
-
-    /**
     * @param array<string, mixed> $id
     */
-    protected function DaftObjectExistsInDatabase(array $id) : bool
+    private function DaftObjectExistsInDatabase(array $id) : bool
     {
         $where = [];
 

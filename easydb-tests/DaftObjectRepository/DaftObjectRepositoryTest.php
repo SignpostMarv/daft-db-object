@@ -9,10 +9,12 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\EasyDB\Tests\DaftObjectRepository;
 
 use InvalidArgumentException;
+use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Factory;
 use ReflectionObject;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
+use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\EasyDB\Tests\DaftObject\IntegerIdBasedDaftObject;
@@ -47,6 +49,20 @@ class DaftObjectRepositoryTest extends Base
         );
     }
 
+    public function testDatabaseConnectionNotSpecifiedException() : void
+    {
+        static::expectException(DatabaseConnectionNotSpecifiedException::class);
+        static::expectExceptionMessage(
+            'Argument 2 passed to ' .
+            TestObjectRepository::class .
+            '::DaftObjectRepositoryByType() must be an implementation of ' .
+            EasyDB::class .
+            ', null given.'
+        );
+
+        TestObjectRepository::DaftObjectRepositoryByType(IntegerIdBasedDaftObject::class);
+    }
+
     public function testScalarRecall() : void
     {
         $instance = new IntegerIdBasedDaftObject(['Foo' => self::EXAMPLE_ID]);
@@ -64,15 +80,16 @@ class DaftObjectRepositoryTest extends Base
         $ref->setAccessible(self::BOOL_FORCE_METHOD_ACCESSIBLE);
 
         /**
-        * @var \SignpostMarv\DaftObject\IntegerIdBasedDaftObject|null
+        * @var IntegerIdBasedDaftObject|null
         */
         $obj = $ref->invoke($repo, self::EXAMPLE_ID);
 
-        if ( ! ($obj instanceof IntegerIdBasedDaftObject)) {
             static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
 
-            return;
-        }
+        /**
+        * @var IntegerIdBasedDaftObject
+        */
+        $obj = $obj;
 
         static::assertSame($instance->GetFoo(), $obj->GetId());
 
@@ -87,24 +104,5 @@ class DaftObjectRepositoryTest extends Base
 
         static::assertSame($instance->GetId(), $obj->GetId());
         static::assertTrue($obj->Bar);
-    }
-
-    public function testDaftObjectIdPropertiesFromTypeMadePublic() : void
-    {
-        static::expectException(InvalidArgumentException::class);
-        static::expectExceptionMessage(
-            'Argument 1 passed to ' .
-            AbstractDaftObjectEasyDBRepository::class .
-            '::DaftObjectIdPropertiesFromType must be an implementation of ' .
-            DefinesOwnIdPropertiesInterface::class .
-            ', ' .
-            stdClass::class .
-            ' given!'
-        );
-
-        TestObjectRepository::DaftObjectIdPropertiesFromTypeMadePublic(
-            stdClass::class,
-            self::EXAMPLE_ID
-        );
     }
 }

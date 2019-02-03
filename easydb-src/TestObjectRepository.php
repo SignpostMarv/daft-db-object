@@ -14,6 +14,7 @@ use ReflectionType;
 use RuntimeException;
 use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\DefinitionAssistant;
 use SignpostMarv\DaftObject\TypeParanoia;
 use stdClass;
 
@@ -24,6 +25,8 @@ use stdClass;
 */
 class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 {
+    const COUNT_EMPTY_ARRAY = 0;
+
     /**
     * {@inheritdoc}
     *
@@ -56,7 +59,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                 $queryPart =
                     $db->escapeIdentifier($prop) .
                     static::QueryPartTypeFromRefReturn($refReturn);
-                if ( ! in_array($prop, $nullables, true)) {
+                if ( ! in_array($prop, $nullables, DefinitionAssistant::IN_ARRAY_STRICT_MODE)) {
                     return $queryPart . ' NOT NULL';
                 }
 
@@ -69,19 +72,11 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
         $primaryKeyCols = array_map([$db, 'escapeIdentifier'], $type::DaftObjectIdProperties());
 
-        if (count($primaryKeyCols) > 0) {
+        if (count($primaryKeyCols) > self::COUNT_EMPTY_ARRAY) {
             $queryParts[] = 'PRIMARY KEY (' . implode(',', $primaryKeyCols) . ')';
         }
 
         $db->safeQuery($query . implode(',', $queryParts) . ');');
-    }
-
-    /**
-    * @param mixed $id
-    */
-    public static function DaftObjectIdPropertiesFromTypeMadePublic(string $type, $id) : array
-    {
-        return static::DaftObjectIdPropertiesFromType($type, $id);
     }
 
     protected function DaftObjectDatabaseTable() : string
@@ -94,7 +89,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         return $out;
     }
 
-    protected static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string
+    private static function QueryPartTypeFromRefReturn(ReflectionType $refReturn) : string
     {
         if ($refReturn->isBuiltin()) {
             switch ($refReturn->__toString()) {

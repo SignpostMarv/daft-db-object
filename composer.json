@@ -44,6 +44,7 @@
         ],
         "scrutinizer": [
             "@phpunit",
+            "infection --min-msi=100",
             "@other-tests"
         ],
         "other-tests": [
@@ -53,10 +54,6 @@
             "phpmnd ./ --exclude=./phpdoc/ --exclude=./phpunit --exclude=./vendor/",
             "composer-require-checker check ./composer.json",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
-        ],
-        "infection": [
-            "@tests",
-            "infection"
         ],
         "check-coverage-on-tests": [
             "composer install",
