@@ -218,18 +218,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     */
     private static function DaftObjectIdPropertiesFromType(string $type, $id) : array
     {
-        if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                ' must be an implementation of ' .
-                DefinesOwnIdPropertiesInterface::class .
-                ', ' .
-                $type .
-                ' given!'
-            );
-        }
-
         /**
         * @var array<int, string>
         */
