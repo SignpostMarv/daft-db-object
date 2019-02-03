@@ -24,12 +24,6 @@
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractDaftObjectEasyDBRepository::ModifyTypesForDatabase"
             ]
-        },
-        "Throw_": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\AbstractDaftObjectEasyDBRepository::DaftObjectIdPropertiesFromType",
-                "SignpostMarv\\DaftObject\\AbstractDaftObjectEasyDBRepository::DaftObjectRepositoryArgsEasyDbActuallyRequired"
-            ]
         }
     }
 }
