@@ -16,6 +16,8 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "SignpostMarv\\DaftMagicPropertyAnalysis\\": "./vendor/signpostmarv/daft-magic-property-analysis/src/",
+            "SignpostMarv\\DaftMagicPropertyAnalysis\\PHPStan\\": "./vendor/signpostmarv/daft-magic-property-analysis/PHPStan/",
             "SignpostMarv\\DaftObject\\": "./vendor/signpostmarv/daft-object/tests-src/",
             "SignpostMarv\\DaftObject\\PHPStan\\": "./vendor/signpostmarv/daft-object/PHPStan/",
             "SignpostMarv\\DaftObject\\Tests\\": "./vendor/signpostmarv/daft-object/Tests/",
@@ -65,7 +67,7 @@
         "php": "^7.1",
         "ext-mbstring": "*",
         "paragonie/easydb": "^2.7",
-        "signpostmarv/daft-object": "^1.3"
+        "signpostmarv/daft-object": "^1.8"
     },
     "require-dev": {
         "infection/infection": "^0.11.5",

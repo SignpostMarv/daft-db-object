@@ -6,7 +6,7 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject\EasyDB\Tests;
+namespace SignpostMarv\DaftObject\EasyDB\Tests\DaftObjectRepository;
 
 use InvalidArgumentException;
 use ParagonIE\EasyDB\Factory;
@@ -15,8 +15,8 @@ use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
-use SignpostMarv\DaftObject\EasyDB\Tests\Fixtures\IntegerIdBasedDaftObject;
-use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as Base;
+use SignpostMarv\DaftObject\EasyDB\Tests\DaftObject\IntegerIdBasedDaftObject;
+use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest as Base;
 use stdClass;
 
 class DaftObjectRepositoryTest extends Base
@@ -27,6 +27,9 @@ class DaftObjectRepositoryTest extends Base
 
     const BOOL_TEST_ASSUME_DOES_NOT_EXIST = true;
 
+    /**
+    * {@inheritdoc}
+    */
     public static function DaftObjectRepositoryByType(string $type) : DaftObjectRepository
     {
         return TestObjectRepository::DaftObjectRepositoryByType(
@@ -78,11 +81,10 @@ class DaftObjectRepositoryTest extends Base
         $repo->RememberDaftObjectData($instance, self::BOOL_TEST_ASSUME_DOES_NOT_EXIST);
 
         /**
-        * @var DefinesOwnIdPropertiesInterface
+        * @var IntegerIdBasedDaftObject
         */
         $obj = $repo->RecallDaftObject(self::EXAMPLE_ID);
 
-        static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
         static::assertSame($instance->GetId(), $obj->GetId());
         static::assertTrue($obj->Bar);
     }
@@ -104,30 +106,5 @@ class DaftObjectRepositoryTest extends Base
             stdClass::class,
             self::EXAMPLE_ID
         );
-    }
-
-    public function testDaftObjectFromQueryStdClassType() : void
-    {
-        $instance = new IntegerIdBasedDaftObject(['Foo' => self::EXAMPLE_ID]);
-
-        /**
-        * @var TestObjectRepository
-        */
-        $repo = TestObjectRepository::DaftObjectRepositoryByDaftObject(
-            $instance,
-            Factory::create('sqlite::memory:')
-        );
-
-        static::expectException(InvalidArgumentException::class);
-        static::expectExceptionMessage(
-            TestObjectRepository::class .
-            '::$type must be an implementation of ' .
-            DefinesOwnIdPropertiesInterface::class .
-            ', ' .
-            stdClass::class .
-            ' given!'
-        );
-
-        $repo->RecallDaftObjectFromQueryStdClassType(['Foo' => self::EXAMPLE_ID]);
     }
 }

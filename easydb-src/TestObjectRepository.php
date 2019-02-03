@@ -17,8 +17,18 @@ use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\TypeParanoia;
 use stdClass;
 
+/**
+* @template T as DefinesOwnIdPropertiesInterface&\SignpostMarv\DaftObject\DaftObjectCreatedByArray
+*
+* @template-extends AbstractDaftObjectEasyDBRepository<T>
+*/
 class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 {
+    /**
+    * {@inheritdoc}
+    *
+    * @psalm-param class-string<T> $type
+    */
     protected function __construct(string $type, EasyDB $db)
     {
         parent::__construct($type, $db);
@@ -46,7 +56,7 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
                 $queryPart =
                     $db->escapeIdentifier($prop) .
                     static::QueryPartTypeFromRefReturn($refReturn);
-                if ( ! TypeParanoia::MaybeInArray($prop, $nullables)) {
+                if ( ! in_array($prop, $nullables, true)) {
                     return $queryPart . ' NOT NULL';
                 }
 
@@ -64,17 +74,6 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
         }
 
         $db->safeQuery($query . implode(',', $queryParts) . ');');
-    }
-
-    /**
-    * @param array<string, mixed> $idkv
-    */
-    public function RecallDaftObjectFromQueryStdClassType(
-        array $idkv
-    ) : ? DefinesOwnIdPropertiesInterface {
-        $this->type = stdClass::class;
-
-        return $this->RecallDaftObjectFromQuery($idkv);
     }
 
     /**

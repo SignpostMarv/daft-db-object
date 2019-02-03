@@ -11,6 +11,11 @@ namespace SignpostMarv\DaftObject;
 use InvalidArgumentException;
 use ParagonIE\EasyDB\EasyDB;
 
+/**
+* @template T as DefinesOwnIdPropertiesInterface&DaftObjectCreatedByArray
+*
+* @template-extends DaftObjectMemoryRepository<T>
+*/
 abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryRepository
 {
     const ARG_SECOND = 2;
@@ -27,7 +32,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     protected $db;
 
     /**
-    * @param mixed ...$args
+    * {@inheritdoc}
+    *
+    * @psalm-param class-string<T> $type
     */
     protected function __construct(string $type, EasyDB $db, ...$args)
     {
@@ -37,6 +44,10 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     /**
     * {@inheritdoc}
+    *
+    * @psalm-param class-string<T> $type
+    *
+    * @psalm-return AbstractDaftObjectEasyDBRepository<T>
     */
     public static function DaftObjectRepositoryByType(
         string $type,
@@ -46,20 +57,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         * @var EasyDB|null
         */
         $db = array_shift($args) ?: null;
-
-        $a = is_a($type, DaftObjectCreatedByArray::class, true);
-        if (
-            false === $a ||
-            false === is_a($type, DefinesOwnIdPropertiesInterface::class, true)
-        ) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                1,
-                static::class,
-                __FUNCTION__,
-                ($a ? DefinesOwnIdPropertiesInterface::class : DaftObjectCreatedByArray::class),
-                $type
-            );
-        }
 
         $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired(
             $db,
@@ -72,6 +69,12 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     /**
     * {@inheritdoc}
+    *
+    * @psalm-param T $object
+    *
+    * @return static
+    *
+    * @psalm-return AbstractDaftObjectEasyDBRepository<T>
     */
     public static function DaftObjectRepositoryByDaftObject(
         DefinesOwnIdPropertiesInterface $object,
@@ -88,11 +91,16 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             __FUNCTION__
         );
 
-        return static::DaftObjectRepositoryByType(get_class($object), $db, ...$args);
+        /**
+        * @psalm-var class-string<T>
+        */
+        $className = get_class($object);
+
+        return static::DaftObjectRepositoryByType($className, $db, ...$args);
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function RemoveDaftObjectById($id) : void
     {
@@ -232,7 +240,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         if ($exists) {
             $changed = $object->ChangedProperties();
             $cols = array_filter($cols, function (string $prop) use ($changed) : bool {
-                return TypeParanoia::MaybeInArray($prop, $changed);
+                return in_array($prop, $changed, true);
             });
         }
 
@@ -269,9 +277,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     }
 
     /**
-    * @param mixed $id
+    * {@inheritdoc}
     */
-    protected function RecallDaftObjectFromData($id) : ? DaftObject
+    protected function RecallDaftObjectFromData($id) : ? DefinesOwnIdPropertiesInterface
     {
         $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
 
@@ -280,28 +288,15 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     /**
     * @param array<string, mixed> $idkv
+    *
+    * @psalm-return T
     */
     protected function RecallDaftObjectFromQuery(array $idkv) : ? DefinesOwnIdPropertiesInterface
     {
         $type = $this->type;
 
-        if ( ! is_a($type, DefinesOwnIdPropertiesInterface::class, true)) {
-            throw new InvalidArgumentException(
-                static::class . '::$type must be an implementation of ' .
-                DefinesOwnIdPropertiesInterface::class .
-                ', ' .
-                $type .
-                ' given!'
-            );
-        }
-
         if (true === $this->DaftObjectExistsInDatabase($idkv)) {
-            /**
-            * @var DefinesOwnIdPropertiesInterface
-            */
-            $out = new $type($this->RecallDaftObjectDataFromQuery($idkv));
-
-            return $out;
+            return new $type($this->RecallDaftObjectDataFromQuery($idkv));
         }
 
         return null;

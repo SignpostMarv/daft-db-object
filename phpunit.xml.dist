@@ -4,7 +4,7 @@
       <directory>./vendor/signpostmarv/daft-object/Tests/</directory>
     </testsuite>
     <testsuite name="DaftObjectEasyDBRepository">
-      <directory>./easydb-tests/</directory>
+      <directory>./easydb-tests/DaftObjectRepository/</directory>
     </testsuite>
   </testsuites>
   <logging>
