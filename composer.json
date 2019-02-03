@@ -33,7 +33,7 @@
         "phpunit": [
             "phpunit --dump-xdebug-filter ./xdebug-filter.phpunit.php",
             "php-cs-fixer fix --verbose ./xdebug-filter.phpunit.php",
-            "phpunit -vvvv --prepend ./xdebug-filter.phpunit.php"
+            "phpunit -vvvv --prepend ./xdebug-filter.phpunit.php --coverage-clover=phpunit.clover"
         ],
         "phpunit-no-coverage": [
             "phpunit -vvvv --no-coverage"
