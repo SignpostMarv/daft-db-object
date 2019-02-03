@@ -8,18 +8,15 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\EasyDB\Tests\DaftObjectRepository;
 
-use InvalidArgumentException;
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Factory;
 use ReflectionObject;
-use SignpostMarv\DaftObject\AbstractDaftObjectEasyDBRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\EasyDB\Tests\DaftObject\IntegerIdBasedDaftObject;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest as Base;
-use stdClass;
 
 class DaftObjectRepositoryTest extends Base
 {
@@ -84,7 +81,7 @@ class DaftObjectRepositoryTest extends Base
         */
         $obj = $ref->invoke($repo, self::EXAMPLE_ID);
 
-            static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
+        static::assertInstanceOf(IntegerIdBasedDaftObject::class, $obj);
 
         /**
         * @var IntegerIdBasedDaftObject

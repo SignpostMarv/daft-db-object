@@ -144,6 +144,72 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     }
 
     /**
+    * @return array<string, mixed>
+    */
+    protected function ModifyTypesForDatabase(array $values) : array
+    {
+        /**
+        * @var array<string, mixed>
+        */
+        $out = array_map(
+            /**
+            * @param mixed $val
+            *
+            * @return mixed
+            */
+            function ($val) {
+                return
+                    is_bool($val)
+                        ? (
+                            $val
+                                ? self::BOOL_TRUE_AS_INT
+                                : self::BOOL_FALSE_AS_INT
+                        )
+                        : $val;
+            },
+            $values
+        );
+
+        return $out;
+    }
+
+    abstract protected function DaftObjectDatabaseTable() : string;
+
+    /**
+    * {@inheritdoc}
+    */
+    protected function RecallDaftObjectFromData($id) : ? DefinesOwnIdPropertiesInterface
+    {
+        $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
+        $type = $this->type;
+
+        if (true === $this->DaftObjectExistsInDatabase($idkv)) {
+            /**
+            * @var array[]
+            */
+            $data = $this->db->safeQuery(
+                (
+                    'SELECT * FROM ' .
+                    $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
+                    ' WHERE ' .
+                    implode(' AND ', array_map(
+                        function (string $col) : string {
+                            return $this->db->escapeIdentifier($col) . ' = ?';
+                        },
+                        array_keys($idkv)
+                    )) .
+                    ' LIMIT 1'
+                ),
+                array_values($idkv)
+            );
+
+            return new $type($data[0]);
+        }
+
+        return null;
+    }
+
+    /**
     * @param mixed $id
     *
     * @psalm-param class-string<T> $type
@@ -211,38 +277,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     }
 
     /**
-    * @return array<string, mixed>
-    */
-    protected function ModifyTypesForDatabase(array $values) : array
-    {
-        /**
-        * @var array<string, mixed>
-        */
-        $out = array_map(
-            /**
-            * @param mixed $val
-            *
-            * @return mixed
-            */
-            function ($val) {
-                return
-                    is_bool($val)
-                        ? (
-                            $val
-                                ? self::BOOL_TRUE_AS_INT
-                                : self::BOOL_FALSE_AS_INT
-                        )
-                        : $val;
-            },
-            $values
-        );
-
-        return $out;
-    }
-
-    abstract protected function DaftObjectDatabaseTable() : string;
-
-    /**
     * @return string[]
     */
     private function RememberDaftObjectDataCols(DaftObject $object, bool $exists) : array
@@ -268,40 +302,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 $this->db->update($this->DaftObjectDatabaseTable(), $values, $id);
             }
         }
-    }
-
-    /**
-    * {@inheritdoc}
-    */
-    protected function RecallDaftObjectFromData($id) : ? DefinesOwnIdPropertiesInterface
-    {
-        $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
-        $type = $this->type;
-
-        if (true === $this->DaftObjectExistsInDatabase($idkv)) {
-            /**
-            * @var array[]
-            */
-            $data = $this->db->safeQuery(
-                (
-                    'SELECT * FROM ' .
-                    $this->db->escapeIdentifier($this->DaftObjectDatabaseTable()) .
-                    ' WHERE ' .
-                    implode(' AND ', array_map(
-                        function (string $col) : string {
-                            return $this->db->escapeIdentifier($col) . ' = ?';
-                        },
-                        array_keys($idkv)
-                    )) .
-                    ' LIMIT 1'
-                ),
-                array_values($idkv)
-            );
-
-            return new $type($data[0]);
-        }
-
-        return null;
     }
 
     /**
