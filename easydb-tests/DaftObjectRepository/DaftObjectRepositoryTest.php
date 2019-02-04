@@ -13,7 +13,7 @@ use ParagonIE\EasyDB\Factory;
 use ReflectionObject;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
-use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\EasyDB\Tests\DaftObject\IntegerIdBasedDaftObject;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest as Base;
@@ -38,7 +38,7 @@ class DaftObjectRepositoryTest extends Base
     }
 
     public static function DaftObjectRepositoryByDaftObject(
-        DefinesOwnIdPropertiesInterface $object
+        SuitableForRepositoryType $object
     ) : DaftObjectRepository {
         return TestObjectRepository::DaftObjectRepositoryByDaftObject(
             $object,

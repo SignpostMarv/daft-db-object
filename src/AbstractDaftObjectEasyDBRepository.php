@@ -11,7 +11,7 @@ namespace SignpostMarv\DaftObject;
 use ParagonIE\EasyDB\EasyDB;
 
 /**
-* @template T as DefinesOwnIdPropertiesInterface&DaftObjectCreatedByArray
+* @template T as SuitableForRepositoryType
 *
 * @template-extends DaftObjectMemoryRepository<T>
 */
@@ -78,7 +78,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     * @psalm-return AbstractDaftObjectEasyDBRepository<T>
     */
     public static function DaftObjectRepositoryByDaftObject(
-        DefinesOwnIdPropertiesInterface $object,
+        SuitableForRepositoryType $object,
         ...$args
     ) : DaftObjectRepository {
         /**
@@ -115,7 +115,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     }
 
     public function RememberDaftObjectData(
-        DefinesOwnIdPropertiesInterface $object,
+        SuitableForRepositoryType $object,
         bool $assumeDoesNotExist = false
     ) : void {
         $id = [];
@@ -177,7 +177,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * {@inheritdoc}
     */
-    protected function RecallDaftObjectFromData($id) : ? DefinesOwnIdPropertiesInterface
+    protected function RecallDaftObjectFromData($id) : ? SuitableForRepositoryType
     {
         $idkv = self::DaftObjectIdPropertiesFromType($this->type, $id);
         $type = $this->type;

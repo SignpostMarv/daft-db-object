@@ -64,7 +64,7 @@
         "php": "^7.1",
         "ext-mbstring": "*",
         "paragonie/easydb": "^2.7",
-        "signpostmarv/daft-object": "^1.8"
+        "signpostmarv/daft-object": "^1.10"
     },
     "require-dev": {
         "infection/infection": "^0.12.0",
