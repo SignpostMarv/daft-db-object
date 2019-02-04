@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files>
-  <file src="easydb-tests\DaftObjectRepositoryByTypeTest.php">
-    <InvalidStringClass occurrences="1">
-      <code>$implementation::DaftObjectRepositoryByType($objectImplementation, ...$additionalArgs)</code>
-    </InvalidStringClass>
-  </file>
-  <file src="easydb-tests\DaftObjectRepositoryTest.php">
-    <NoInterfaceProperties occurrences="1">
-      <code>$obj-&gt;Bar</code>
-    </NoInterfaceProperties>
-  </file>
-</files>
+<files/>
