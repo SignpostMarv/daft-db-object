@@ -13,9 +13,9 @@ use ParagonIE\EasyDB\Factory;
 use ReflectionObject;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DatabaseConnectionNotSpecifiedException;
-use SignpostMarv\DaftObject\SuitableForRepositoryType;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\EasyDB\Tests\DaftObject\IntegerIdBasedDaftObject;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest as Base;
 
 class DaftObjectRepositoryTest extends Base
