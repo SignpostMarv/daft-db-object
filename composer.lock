@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa6ec131d51928d2cd4c0488de5c0955",
+    "content-hash": "9a5362a4205fb6a04310a113189926db",
     "packages": [
         {
             "name": "paragonie/corner",
@@ -158,16 +158,16 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "v1.12.1",
+            "version": "v1.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "8828a1da7a1ec3e64f34c75aa1cc83ba96c9a825"
+                "reference": "45fb71462ce04e55efcc8e4ee1629ab40740c24b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/8828a1da7a1ec3e64f34c75aa1cc83ba96c9a825",
-                "reference": "8828a1da7a1ec3e64f34c75aa1cc83ba96c9a825",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/45fb71462ce04e55efcc8e4ee1629ab40740c24b",
+                "reference": "45fb71462ce04e55efcc8e4ee1629ab40740c24b",
                 "shasum": ""
             },
             "require": {
@@ -206,7 +206,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2019-02-09T23:27:55+00:00"
+            "time": "2019-02-10T16:21:55+00:00"
         }
     ],
     "packages-dev": [
