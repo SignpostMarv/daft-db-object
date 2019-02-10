@@ -11,9 +11,9 @@ namespace SignpostMarv\DaftObject;
 use ParagonIE\EasyDB\EasyDB;
 
 /**
-* @template T as SuitableForRepositoryType
+* @template TDbObj as SuitableForRepositoryType
 *
-* @template-extends DaftObjectMemoryRepository<T>
+* @template-extends DaftObjectMemoryRepository<TDbObj>
 */
 abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryRepository
 {
@@ -35,7 +35,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * {@inheritdoc}
     *
-    * @psalm-param class-string<T> $type
+    * @psalm-param class-string<TDbObj> $type
     */
     protected function __construct(string $type, EasyDB $db, ...$args)
     {
@@ -46,9 +46,9 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * {@inheritdoc}
     *
-    * @psalm-param class-string<T> $type
+    * @psalm-param class-string<TDbObj> $type
     *
-    * @psalm-return AbstractDaftObjectEasyDBRepository<T>
+    * @psalm-return AbstractDaftObjectEasyDBRepository<TDbObj>
     */
     public static function DaftObjectRepositoryByType(
         string $type,
@@ -71,11 +71,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * {@inheritdoc}
     *
-    * @psalm-param T $object
+    * @psalm-param TDbObj $object
     *
     * @return static
     *
-    * @psalm-return AbstractDaftObjectEasyDBRepository<T>
+    * @psalm-return AbstractDaftObjectEasyDBRepository<TDbObj>
     */
     public static function DaftObjectRepositoryByDaftObject(
         SuitableForRepositoryType $object,
@@ -93,7 +93,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         );
 
         /**
-        * @psalm-var class-string<T>
+        * @psalm-var class-string<TDbObj>
         */
         $className = get_class($object);
 
@@ -211,7 +211,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * @param mixed $id
     *
-    * @psalm-param class-string<T> $type
+    * @psalm-param class-string<TDbObj> $type
     *
     * @return array<string, mixed>
     */
