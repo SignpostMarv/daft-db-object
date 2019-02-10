@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab1ce322594388304443330b153a6697",
+    "content-hash": "5b2d9e7b9fbd41aa51b1d9c015cae676",
     "packages": [
         {
             "name": "paragonie/corner",
@@ -158,16 +158,16 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "v1.10.0",
+            "version": "v1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "3e71a6cb0f50b31ed3a7e6c2bb2ee7f84bfa8c99"
+                "reference": "8828a1da7a1ec3e64f34c75aa1cc83ba96c9a825"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/3e71a6cb0f50b31ed3a7e6c2bb2ee7f84bfa8c99",
-                "reference": "3e71a6cb0f50b31ed3a7e6c2bb2ee7f84bfa8c99",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/8828a1da7a1ec3e64f34c75aa1cc83ba96c9a825",
+                "reference": "8828a1da7a1ec3e64f34c75aa1cc83ba96c9a825",
                 "shasum": ""
             },
             "require": {
@@ -187,7 +187,7 @@
                 "roave/security-advisories": "dev-master",
                 "sebastian/phpcpd": "^4.1",
                 "signpostmarv/php-cs-fixer-config": "^0.6.1",
-                "vimeo/psalm": "^3.0"
+                "vimeo/psalm": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -206,7 +206,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2019-02-04T22:39:04+00:00"
+            "time": "2019-02-09T23:27:55+00:00"
         }
     ],
     "packages-dev": [
