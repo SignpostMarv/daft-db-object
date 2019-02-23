@@ -1,16 +1,17 @@
 <phpunit bootstrap="phpunit-bootstrap.php">
   <testsuites>
-    <testsuite name="DaftObject">
-      <directory>./vendor/signpostmarv/daft-object/Tests/</directory>
-    </testsuite>
-    <testsuite name="DaftObjectEasyDBRepository">
-      <directory>./easydb-tests/DaftObjectRepository/</directory>
+    <testsuite name="DaftObjectRepository > AbstractDaftObjectEasyDBRepository">
+      <directory>./Tests/AbstractDaftObjectEasyDBRepository/</directory>
     </testsuite>
   </testsuites>
   <logging>
     <log
       type="coverage-html"
       target="phpunit"
+    />
+    <log
+      type="coverage-clover"
+      target="phpunit.clover"
     />
     <log
       type="coverage-text"
@@ -23,7 +24,7 @@
     <whitelist processUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">./src/</directory>
       <directory suffix=".php">./easydb-src/</directory>
-      <directory suffix=".php">./easydb-tests/</directory>
+      <directory suffix=".php">./Tests/</directory>
     </whitelist>
   </filter>
 </phpunit>

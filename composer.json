@@ -17,18 +17,17 @@
     "autoload-dev": {
         "psr-4": {
             "SignpostMarv\\DaftMagicPropertyAnalysis\\": "./vendor/signpostmarv/daft-magic-property-analysis/src/",
-            "SignpostMarv\\DaftMagicPropertyAnalysis\\PHPStan\\": "./vendor/signpostmarv/daft-magic-property-analysis/PHPStan/",
             "SignpostMarv\\DaftObject\\": [
-                "./vendor/signpostmarv/daft-object/tests-src/",
-                "./vendor/signpostmarv/daft-object-repository/tests-src/"
+                "./vendor/signpostmarv/daft-object/tests-src/"
             ],
-            "SignpostMarv\\DaftObject\\PHPStan\\": "./vendor/signpostmarv/daft-object/PHPStan/",
+            "SignpostMarv\\DaftObject\\DaftObjectRepository\\Tests\\": [
+                "./vendor/signpostmarv/daft-object-repository/Tests/",
+                "./Tests/"
+            ],
             "SignpostMarv\\DaftObject\\Tests\\": [
-                "./vendor/signpostmarv/daft-object/Tests/",
-                "./vendor/signpostmarv/daft-object-repository/Tests/"
+                "./vendor/signpostmarv/daft-object/Tests/"
             ],
-            "SignpostMarv\\DaftObject\\EasyDB\\": "./easydb-src/",
-            "SignpostMarv\\DaftObject\\EasyDB\\Tests\\": "./easydb-tests/"
+            "SignpostMarv\\DaftObject\\EasyDB\\": "./easydb-src/"
         }
     },
     "config": {
@@ -37,26 +36,24 @@
     },
     "scripts": {
         "phpunit": [
-            "phpunit --dump-xdebug-filter ./xdebug-filter.phpunit.php",
-            "php-cs-fixer fix --verbose ./xdebug-filter.phpunit.php",
-            "phpunit -vvvv --prepend ./xdebug-filter.phpunit.php --coverage-clover=phpunit.clover"
-        ],
-        "phpunit-no-coverage": [
-            "phpunit -vvvv --no-coverage"
+            "phpunit -vvvv --stop-on-error --stop-on-warning --stop-on-failure"
         ],
         "tests": [
-            "@phpunit-no-coverage",
+            "@phpunit",
             "@other-tests"
         ],
         "scrutinizer": [
             "@phpunit",
-            "infection --min-msi=100",
+            "@infection",
             "@other-tests"
         ],
+        "infection": [
+            "infection --min-msi=100"
+        ],
         "other-tests": [
-            "phpstan analyse -c ./phpstan.neon .php_cs.dist src easydb-src easydb-tests",
+            "phpstan analyse -c ./phpstan.neon .php_cs.dist src easydb-src",
             "psalm",
-            "phpcpd ./src/ ./easydb-tests/ ./easydb-src/",
+            "phpcpd ./src/ ./easydb-src/",
             "phpmnd ./ --exclude=./phpdoc/ --exclude=./phpunit --exclude=./vendor/",
             "composer-require-checker check ./composer.json",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
@@ -70,8 +67,8 @@
         "php": "^7.1",
         "ext-mbstring": "*",
         "paragonie/easydb": "^2.7",
-        "signpostmarv/daft-object": "^1.15",
-        "signpostmarv/daft-object-repository": "^0.1.0"
+        "signpostmarv/daft-object": "dev-master",
+        "signpostmarv/daft-object-repository": "dev-master"
     },
     "require-dev": {
         "infection/infection": "^0.12.2",
@@ -83,7 +80,7 @@
         "povils/phpmnd": "^2.1",
         "roave/security-advisories": "dev-master",
         "sebastian/phpcpd": "^4.1",
-        "signpostmarv/php-cs-fixer-config": "^0.6.1",
+        "signpostmarv/php-cs-fixer-config": "^0.9.0",
         "vimeo/psalm": "^3.0,>=3.0.15"
     }
 }

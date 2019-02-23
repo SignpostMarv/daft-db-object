@@ -47,6 +47,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     * {@inheritdoc}
     *
     * @psalm-param class-string<TDbObj> $type
+    * @psalm-param EasyDB $args[0]
     *
     * @psalm-return AbstractDaftObjectEasyDBRepository<TDbObj>
     */
@@ -55,23 +56,18 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         ...$args
     ) : DaftObjectRepository {
         /**
-        * @var EasyDB|null
+        * @psalm-var array{0:EasyDB}
         */
-        $db = array_shift($args) ?: null;
+        $args = $args;
 
-        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired(
-            $db,
-            self::ARG_SECOND,
-            __FUNCTION__
-        );
-
-        return new static($type, $db, ...$args);
+        return new static($type, ...$args);
     }
 
     /**
     * {@inheritdoc}
     *
     * @psalm-param TDbObj $object
+    * @psalm-param EasyDB $args[0]
     *
     * @return static
     *
@@ -82,22 +78,11 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         ...$args
     ) : DaftObjectRepository {
         /**
-        * @var EasyDB|null
-        */
-        $db = array_shift($args) ?: null;
-
-        $db = self::DaftObjectRepositoryArgsEasyDbActuallyRequired(
-            $db,
-            self::ARG_SECOND,
-            __FUNCTION__
-        );
-
-        /**
         * @psalm-var class-string<TDbObj>
         */
         $className = get_class($object);
 
-        return static::DaftObjectRepositoryByType($className, $db, ...$args);
+        return static::DaftObjectRepositoryByType($className, ...$args);
     }
 
     /**
@@ -116,7 +101,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
 
     public function RememberDaftObjectData(
         SuitableForRepositoryType $object,
-        bool $assumeDoesNotExist = false
+        bool $assumeDoesNotExist = self::BOOL_DOES_NOT_EXIST
     ) : void {
         $id = [];
 
@@ -243,24 +228,6 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
         }
 
         return $idkv;
-    }
-
-    private static function DaftObjectRepositoryArgsEasyDbActuallyRequired(
-        ? EasyDB $db,
-        int $arg,
-        string $function
-    ) : EasyDB {
-        if (false === ($db instanceof EasyDB)) {
-            throw new DatabaseConnectionNotSpecifiedException(
-                $arg,
-                static::class,
-                $function,
-                EasyDB::class,
-                'null'
-            );
-        }
-
-        return $db;
     }
 
     /**
