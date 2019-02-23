@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebc249351bd4f208f0b4b137117c1248",
+    "content-hash": "a9c890001d8403e80bf5772ff3ce091c",
     "packages": [
         {
             "name": "paragonie/corner",
@@ -217,12 +217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object-repository.git",
-                "reference": "7005eb56c5d5fea8dd5ed424d4ccbaff45a0dec3"
+                "reference": "980ec72d5d6c1c65281b7f68342201b2ec5a3962"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/7005eb56c5d5fea8dd5ed424d4ccbaff45a0dec3",
-                "reference": "7005eb56c5d5fea8dd5ed424d4ccbaff45a0dec3",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/980ec72d5d6c1c65281b7f68342201b2ec5a3962",
+                "reference": "980ec72d5d6c1c65281b7f68342201b2ec5a3962",
                 "shasum": ""
             },
             "require": {
@@ -263,7 +263,7 @@
                 }
             ],
             "description": "Daft Object Repository",
-            "time": "2019-02-23T18:15:34+00:00"
+            "time": "2019-02-23T19:04:16+00:00"
         }
     ],
     "packages-dev": [
@@ -3240,6 +3240,57 @@
             "time": "2019-01-27T17:18:25+00:00"
         },
         {
+            "name": "psalm/plugin-phpunit",
+            "version": "0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psalm/phpunit-psalm-plugin.git",
+                "reference": "707b2472bad6655d85c39a4e2e1d210800c73b75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psalm/phpunit-psalm-plugin/zipball/707b2472bad6655d85c39a4e2e1d210800c73b75",
+                "reference": "707b2472bad6655d85c39a4e2e1d210800c73b75",
+                "shasum": ""
+            },
+            "require": {
+                "composer/semver": "^1.4",
+                "muglug/package-versions-56": "^1.2",
+                "phpunit/phpunit": "^5.0 || ^6.0 || ^7.0",
+                "vimeo/psalm": "^3.0 || dev-master"
+            },
+            "require-dev": {
+                "codeception/base": "^2.5",
+                "squizlabs/php_codesniffer": "^3.3.1",
+                "weirdan/codeception-psalm-module": "^0.1.0"
+            },
+            "type": "psalm-plugin",
+            "extra": {
+                "psalm": {
+                    "pluginClass": "Psalm\\PhpUnitPlugin\\Plugin"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psalm\\PhpUnitPlugin\\": [
+                        "."
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Brown",
+                    "email": "github@muglug.com"
+                }
+            ],
+            "description": "Psalm plugin for PHPUnit",
+            "time": "2019-02-14T05:10:52+00:00"
+        },
+        {
             "name": "psr/container",
             "version": "1.0.0",
             "source": {
@@ -5153,16 +5204,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.0.17",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "f49be31aeb7c2e063ae732521020247e769bf83d"
+                "reference": "fff56f7b26eb78364698dfd3b863f21c062c9c9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f49be31aeb7c2e063ae732521020247e769bf83d",
-                "reference": "f49be31aeb7c2e063ae732521020247e769bf83d",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/fff56f7b26eb78364698dfd3b863f21c062c9c9d",
+                "reference": "fff56f7b26eb78364698dfd3b863f21c062c9c9d",
                 "shasum": ""
             },
             "require": {
@@ -5227,7 +5278,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-02-18T21:52:09+00:00"
+            "time": "2019-02-23T16:39:00+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5379,7 +5430,8 @@
     "stability-flags": {
         "signpostmarv/daft-object": 20,
         "signpostmarv/daft-object-repository": 20,
-        "roave/security-advisories": 20
+        "roave/security-advisories": 20,
+        "vimeo/psalm": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

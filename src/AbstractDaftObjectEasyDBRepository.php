@@ -122,7 +122,15 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
             $cols = array_combine($cols, $cols);
 
             $this->RememberDaftObjectDataUpdate($exists, $id, $this->ModifyTypesForDatabase(
-                array_map([$object, '__get'], $cols)
+                array_map(
+                    /**
+                    * @return scalar|array|object|null
+                    */
+                    function (string $col) use ($object) {
+                        return $object->__get($col);
+                    },
+                    $cols
+                )
             ));
         });
     }

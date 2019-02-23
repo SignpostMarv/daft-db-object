@@ -16,7 +16,7 @@ use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 /**
-* @template T as SuitableForRepositoryIntType
+* @template T as SuitableForRepositoryType
 * @template R as TestObjectRepository
 *
 * @template-extends DaftObjectMemoryRepositoryTest<T, R>
@@ -27,6 +27,9 @@ class AbstractDaftObjectEasyDBRepositoryTest extends DaftObjectMemoryRepositoryT
     {
         $expected_data = static::InitialData_test_DaftObjectMemoryRepository();
 
+        /**
+        * @psalm-var T
+        */
         $a = static::ObtainSuitableForRepositoryIntTypeFromArgs(array_merge(
             ['id' => 1],
             $expected_data

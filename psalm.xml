@@ -6,26 +6,13 @@
     errorBaseline="./psalm.baseline.xml"
 >
     <projectFiles>
-        <file name=".php_cs.dist" />
-        <file name="phpunit-bootstrap.php" />
-        <directory name="src" />
-        <directory name="easydb-src" />
-        <directory name="easydb-tests" />
+        <file name=".php_cs.dist"/>
+        <file name="phpunit-bootstrap.php"/>
+        <directory name="src"/>
+        <directory name="easydb-src"/>
+        <directory name="Tests"/>
     </projectFiles>
 
     <issueHandlers>
-        <LessSpecificReturnType errorLevel="error" />
-
-        <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
-        <DeprecatedMethod errorLevel="error" />
-
-        <MissingClosureReturnType errorLevel="error" />
-        <MissingReturnType errorLevel="error" />
-        <MissingPropertyType errorLevel="error" />
-        <InvalidDocblock errorLevel="error" />
-        <MisplacedRequiredParam errorLevel="error" />
-
-        <PropertyNotSetInConstructor errorLevel="error" />
-        <MissingConstructor errorLevel="error" />
     </issueHandlers>
-</psalm>
+<plugins><pluginClass xmlns="https://getpsalm.org/schema/config" class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>

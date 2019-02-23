@@ -15,17 +15,8 @@ use SignpostMarv\DaftObject\DaftObjectRepository\Tests\SuitableForRepositoryType
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
-/**
-* @template T as Fixtures\SuitableForRepositoryIntType
-* @template R as TestObjectRepository
-*
-* @template-extends AbstractDaftObjectEasyDBRepositoryTest<T, R>
-*/
 class AbstractDaftObjectEasyDBRepositoryWithBoolTest extends AbstractDaftObjectEasyDBRepositoryTest
 {
-    /**
-    * @psalm-return class-string<T>
-    */
     protected static function ObtainDaftObjectType() : string
     {
         return Fixtures\SuitableForRepositoryIntType::class;
