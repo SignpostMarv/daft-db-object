@@ -35,8 +35,6 @@ class TestObjectRepository extends AbstractDaftObjectEasyDBRepository
 
         $query = 'CREATE TABLE ' . $db->escapeIdentifier($this->DaftObjectDatabaseTable()) . ' (';
 
-        $queryParts = [];
-
         $ref = new ReflectionClass($type);
         $nullables = $type::DaftObjectNullableProperties();
 

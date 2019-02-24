@@ -52,7 +52,7 @@
         ],
         "other-tests": [
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src easydb-src",
-            "psalm",
+            "psalm --find-dead-code",
             "phpcpd ./src/ ./easydb-src/",
             "phpmnd ./ --exclude=./phpdoc/ --exclude=./phpunit --exclude=./vendor/",
             "composer-require-checker check ./composer.json",

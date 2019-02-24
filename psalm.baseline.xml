@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files/>
+<files>
+  <file src="Tests\AbstractDaftObjectEasyDBRepository\AbstractDaftObjectEasyDBRepositoryTest.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>public function test_AbstractDaftObjectEasyDBRepository() : void</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="Tests\AbstractDaftObjectEasyDBRepository\AbstractDaftObjectEasyDBRepositoryWithBoolTest.php">
+    <UnusedClass occurrences="1">
+      <code>class AbstractDaftObjectEasyDBRepositoryWithBoolTest extends AbstractDaftObjectEasyDBRepositoryTest</code>
+    </UnusedClass>
+  </file>
+  <file src="Tests\AbstractDaftObjectEasyDBRepository\Fixtures\SuitableForRepositoryIntType.php">
+    <PossiblyUnusedMethod occurrences="3">
+      <code>public function GetId() : int</code>
+      <code>public function GetFoo() : bool</code>
+      <code>public function SetFoo(bool $value) : void</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src\AbstractDaftObjectEasyDBRepository.php">
+    <UnusedVariable occurrences="1">
+      <code>$data</code>
+    </UnusedVariable>
+  </file>
+</files>
