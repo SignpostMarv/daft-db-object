@@ -217,12 +217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object-repository.git",
-                "reference": "980ec72d5d6c1c65281b7f68342201b2ec5a3962"
+                "reference": "5ff17abc91c29f16125d2f436144b97150bd8ccb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/980ec72d5d6c1c65281b7f68342201b2ec5a3962",
-                "reference": "980ec72d5d6c1c65281b7f68342201b2ec5a3962",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/5ff17abc91c29f16125d2f436144b97150bd8ccb",
+                "reference": "5ff17abc91c29f16125d2f436144b97150bd8ccb",
                 "shasum": ""
             },
             "require": {
@@ -263,7 +263,7 @@
                 }
             ],
             "description": "Daft Object Repository",
-            "time": "2019-02-23T19:04:16+00:00"
+            "time": "2019-02-24T08:51:31+00:00"
         }
     ],
     "packages-dev": [
@@ -5208,12 +5208,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "fff56f7b26eb78364698dfd3b863f21c062c9c9d"
+                "reference": "674657a51dec97becba753d754956f29601f6341"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/fff56f7b26eb78364698dfd3b863f21c062c9c9d",
-                "reference": "fff56f7b26eb78364698dfd3b863f21c062c9c9d",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/674657a51dec97becba753d754956f29601f6341",
+                "reference": "674657a51dec97becba753d754956f29601f6341",
                 "shasum": ""
             },
             "require": {
@@ -5278,7 +5278,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-02-23T16:39:00+00:00"
+            "time": "2019-02-24T06:47:53+00:00"
         },
         {
             "name": "webmozart/assert",
