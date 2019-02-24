@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9c890001d8403e80bf5772ff3ce091c",
+    "content-hash": "1e75d471a7d216291f2fff8370a696b5",
     "packages": [
         {
             "name": "paragonie/corner",
@@ -159,7 +159,7 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "dev-master",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
@@ -213,16 +213,16 @@
         },
         {
             "name": "signpostmarv/daft-object-repository",
-            "version": "dev-master",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object-repository.git",
-                "reference": "5ff17abc91c29f16125d2f436144b97150bd8ccb"
+                "reference": "1289ea3c5d8039466e85d09b5b095c54bb5075da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/5ff17abc91c29f16125d2f436144b97150bd8ccb",
-                "reference": "5ff17abc91c29f16125d2f436144b97150bd8ccb",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/1289ea3c5d8039466e85d09b5b095c54bb5075da",
+                "reference": "1289ea3c5d8039466e85d09b5b095c54bb5075da",
                 "shasum": ""
             },
             "require": {
@@ -230,7 +230,7 @@
                 "ext-mbstring": "*",
                 "php": "^7.1,>=7.1.3",
                 "signpostmarv/daft-magic-property-analysis": "^0.7.0",
-                "signpostmarv/daft-object": "dev-master"
+                "signpostmarv/daft-object": "^2.0"
             },
             "require-dev": {
                 "infection/infection": "^0.12.2",
@@ -263,7 +263,7 @@
                 }
             ],
             "description": "Daft Object Repository",
-            "time": "2019-02-24T08:51:31+00:00"
+            "time": "2019-02-24T11:34:28+00:00"
         }
     ],
     "packages-dev": [
@@ -5428,8 +5428,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "signpostmarv/daft-object": 20,
-        "signpostmarv/daft-object-repository": 20,
         "roave/security-advisories": 20,
         "vimeo/psalm": 20
     },
