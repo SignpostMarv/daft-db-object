@@ -11,6 +11,6 @@ namespace SignpostMarv\DaftObject\CS;
 return ConfigUsedWithStaticAnalysis::createWithPaths(...[
     __FILE__,
     __DIR__ . '/phpunit-bootstrap.php',
-    (__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR),
-    (__DIR__ . DIRECTORY_SEPARATOR . 'easydb-src' . DIRECTORY_SEPARATOR),
+    __DIR__ . '/src/',
+    __DIR__ . '/easydb-src/',
 ]);
