@@ -6,12 +6,9 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\DaftObjectRepository\Tests\AbstractDaftObjectEasyDBRepository;
 
-use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Factory;
-use SignpostMarv\DaftObject\DaftObjectRepository\Tests\DaftObjectMemoryRepository\DaftObjectMemoryRepositoryTest;
-use SignpostMarv\DaftObject\DaftObjectNotRecalledException;
 use SignpostMarv\DaftObject\DaftObjectRepository;
-use SignpostMarv\DaftObject\DaftObjectRepository\Tests\SuitableForRepositoryType\Fixtures\SuitableForRepositoryIntType;
+use SignpostMarv\DaftObject\DaftObjectRepository\Tests\DaftObjectMemoryRepository\DaftObjectMemoryRepositoryTest;
 use SignpostMarv\DaftObject\EasyDB\TestObjectRepository;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
