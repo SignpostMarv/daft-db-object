@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d64689be10564459d4d67c85ce568953",
+    "content-hash": "bc9db19bda5b658985f43cfd42f8031e",
     "packages": [
         {
             "name": "paragonie/corner",
@@ -159,16 +159,16 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "dev-master",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "0db919e0821ef5a6c092a78e53b465f8b4cb2fad"
+                "reference": "f1b7ddbdd1eb29784c73f006eb65ae9656b30993"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/0db919e0821ef5a6c092a78e53b465f8b4cb2fad",
-                "reference": "0db919e0821ef5a6c092a78e53b465f8b4cb2fad",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/f1b7ddbdd1eb29784c73f006eb65ae9656b30993",
+                "reference": "f1b7ddbdd1eb29784c73f006eb65ae9656b30993",
                 "shasum": ""
             },
             "require": {
@@ -176,7 +176,7 @@
                 "ext-mbstring": "*",
                 "php": "^7.1,>=7.1.3",
                 "signpostmarv/daft-magic-property-analysis": "^0.7.0",
-                "signpostmarv/sprintf-exception-factory": "dev-master"
+                "signpostmarv/sprintf-exception-factory": "^1.2"
             },
             "require-dev": {
                 "infection/infection": "^0.12.2",
@@ -210,20 +210,20 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2019-02-25T21:34:04+00:00"
+            "time": "2019-02-25T23:41:09+00:00"
         },
         {
             "name": "signpostmarv/daft-object-repository",
-            "version": "dev-master",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object-repository.git",
-                "reference": "283559e818c28e0b32920b969b664abeb986b69b"
+                "reference": "f00e576f0426911fd2f5d77945ad1b40b506324e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/283559e818c28e0b32920b969b664abeb986b69b",
-                "reference": "283559e818c28e0b32920b969b664abeb986b69b",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/f00e576f0426911fd2f5d77945ad1b40b506324e",
+                "reference": "f00e576f0426911fd2f5d77945ad1b40b506324e",
                 "shasum": ""
             },
             "require": {
@@ -231,8 +231,8 @@
                 "ext-mbstring": "*",
                 "php": "^7.1,>=7.1.3",
                 "signpostmarv/daft-magic-property-analysis": "^0.7.0",
-                "signpostmarv/daft-object": "dev-master",
-                "signpostmarv/sprintf-exception-factory": "dev-master"
+                "signpostmarv/daft-object": "^2.1",
+                "signpostmarv/sprintf-exception-factory": "^1.2"
             },
             "require-dev": {
                 "infection/infection": "^0.12.2",
@@ -265,11 +265,11 @@
                 }
             ],
             "description": "Daft Object Repository",
-            "time": "2019-02-25T21:44:18+00:00"
+            "time": "2019-02-25T23:56:38+00:00"
         },
         {
             "name": "signpostmarv/sprintf-exception-factory",
-            "version": "dev-master",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/sprintf-exception-factory.git",
@@ -5480,9 +5480,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "signpostmarv/daft-object": 20,
-        "signpostmarv/daft-object-repository": 20,
-        "signpostmarv/sprintf-exception-factory": 20,
         "roave/security-advisories": 20,
         "vimeo/psalm": 20
     },
