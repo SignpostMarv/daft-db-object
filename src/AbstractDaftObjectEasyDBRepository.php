@@ -229,7 +229,7 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
                 /**
                 * @var scalar|array|object|null
                 */
-                $propVal = $id[$i];
+                $propVal = $id[$i] ?? null;
 
                 $idkv[$prop] = $propVal;
             }
