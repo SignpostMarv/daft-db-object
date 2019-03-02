@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd71d1ad89e166c704b5f532812ecf67",
+    "content-hash": "cdc0e2dc7a33f4c32175ef5ee9e1b158",
     "packages": [
         {
             "name": "paragonie/corner",
@@ -159,16 +159,16 @@
         },
         {
             "name": "signpostmarv/daft-object",
-            "version": "dev-master",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "8db32537a355777aebd120d27141b3734ccf2539"
+                "reference": "8d4f99abff1ebd32ed346f2717921da25d6b7373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/8db32537a355777aebd120d27141b3734ccf2539",
-                "reference": "8db32537a355777aebd120d27141b3734ccf2539",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/8d4f99abff1ebd32ed346f2717921da25d6b7373",
+                "reference": "8d4f99abff1ebd32ed346f2717921da25d6b7373",
                 "shasum": ""
             },
             "require": {
@@ -210,20 +210,20 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2019-03-02T10:02:52+00:00"
+            "time": "2019-03-02T16:50:41+00:00"
         },
         {
             "name": "signpostmarv/daft-object-repository",
-            "version": "dev-master",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object-repository.git",
-                "reference": "ead663ffbe7198123fc74fadb66e8063b1970e07"
+                "reference": "dfdd76e709f233358f4ee68b5b123ef21d76ecc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/ead663ffbe7198123fc74fadb66e8063b1970e07",
-                "reference": "ead663ffbe7198123fc74fadb66e8063b1970e07",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/dfdd76e709f233358f4ee68b5b123ef21d76ecc8",
+                "reference": "dfdd76e709f233358f4ee68b5b123ef21d76ecc8",
                 "shasum": ""
             },
             "require": {
@@ -231,7 +231,7 @@
                 "ext-mbstring": "*",
                 "php": "^7.1,>=7.1.3",
                 "signpostmarv/daft-magic-property-analysis": "^0.7.0",
-                "signpostmarv/daft-object": "dev-master",
+                "signpostmarv/daft-object": "^2.2",
                 "signpostmarv/sprintf-exception-factory": "^1.2"
             },
             "require-dev": {
@@ -265,7 +265,7 @@
                 }
             ],
             "description": "Daft Object Repository",
-            "time": "2019-03-02T11:15:26+00:00"
+            "time": "2019-03-02T22:42:03+00:00"
         },
         {
             "name": "signpostmarv/sprintf-exception-factory",
@@ -5403,8 +5403,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "signpostmarv/daft-object": 20,
-        "signpostmarv/daft-object-repository": 20,
         "roave/security-advisories": 20,
         "vimeo/psalm": 20
     },
