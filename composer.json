@@ -67,7 +67,7 @@
         "php": "^7.1",
         "ext-mbstring": "*",
         "paragonie/easydb": "^2.7",
-        "signpostmarv/daft-object": "^2.2",
+        "signpostmarv/daft-object": "^2.3,>=2.3.4",
         "signpostmarv/daft-object-repository": "^1.2"
     },
     "require-dev": {
