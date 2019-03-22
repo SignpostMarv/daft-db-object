@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ddbbd140e14c3b5b95ccd3292f30b94",
+    "content-hash": "a79271e0311e1038f68903d7f27495ea",
     "packages": [
         {
             "name": "paragonie/corner",
@@ -214,16 +214,16 @@
         },
         {
             "name": "signpostmarv/daft-object-repository",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object-repository.git",
-                "reference": "dfdd76e709f233358f4ee68b5b123ef21d76ecc8"
+                "reference": "5d281cab3f9c8605c8f4f6a8d3306887297a2923"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/dfdd76e709f233358f4ee68b5b123ef21d76ecc8",
-                "reference": "dfdd76e709f233358f4ee68b5b123ef21d76ecc8",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object-repository/zipball/5d281cab3f9c8605c8f4f6a8d3306887297a2923",
+                "reference": "5d281cab3f9c8605c8f4f6a8d3306887297a2923",
                 "shasum": ""
             },
             "require": {
@@ -231,7 +231,7 @@
                 "ext-mbstring": "*",
                 "php": "^7.1,>=7.1.3",
                 "signpostmarv/daft-magic-property-analysis": "^0.7.0",
-                "signpostmarv/daft-object": "^2.2",
+                "signpostmarv/daft-object": "^2.3",
                 "signpostmarv/sprintf-exception-factory": "^1.2"
             },
             "require-dev": {
@@ -265,7 +265,7 @@
                 }
             ],
             "description": "Daft Object Repository",
-            "time": "2019-03-02T22:42:03+00:00"
+            "time": "2019-03-21T21:38:41+00:00"
         },
         {
             "name": "signpostmarv/sprintf-exception-factory",
