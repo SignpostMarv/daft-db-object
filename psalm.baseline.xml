@@ -2,9 +2,14 @@
 <files>
   <file src="Tests\AbstractDaftObjectEasyDBRepository\Fixtures\SuitableForRepositoryIntType.php">
     <PossiblyUnusedMethod occurrences="3">
-      <code>public function GetId() : int</code>
-      <code>public function GetFoo() : bool</code>
-      <code>public function SetFoo(bool $value) : void</code>
+      <code>GetId</code>
+      <code>GetFoo</code>
+      <code>SetFoo</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="easydb-src\TestObjectRepository.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>__construct</code>
     </PossiblyUnusedMethod>
   </file>
 </files>
