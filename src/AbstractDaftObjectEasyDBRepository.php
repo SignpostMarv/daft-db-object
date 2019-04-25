@@ -35,6 +35,8 @@ abstract class AbstractDaftObjectEasyDBRepository extends DaftObjectMemoryReposi
     /**
     * {@inheritdoc}
     *
+    * @param mixed ...$args
+    *
     * @psalm-param class-string<TDbObj> $type
     */
     protected function __construct(string $type, EasyDB $db, ...$args)
