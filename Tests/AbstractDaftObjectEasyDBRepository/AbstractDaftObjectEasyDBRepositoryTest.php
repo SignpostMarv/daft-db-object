@@ -76,9 +76,14 @@ class AbstractDaftObjectEasyDBRepositoryTest extends DaftObjectMemoryRepositoryT
         $db = Factory::create('sqlite::memory:');
 
         /**
+        * @psalm-var class-string<T>
+        */
+        $object_type = static::ObtainDaftObjectType();
+
+        /**
         * @psalm-var R
         */
-        $repo = $repo_type::DaftObjectRepositoryByType(static::ObtainDaftObjectType(), $db);
+        $repo = $repo_type::DaftObjectRepositoryByType($object_type, $db);
 
         $db = Factory::create('sqlite::memory:');
 
